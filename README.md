@@ -4,7 +4,7 @@
 # EmbolcallRNAseq
 
 <p align="center">
-  <img width="200"  src="https://github.roche.com/pechuanj/EmbolcallRNAseq/blob/master/IMG_7717.PNG">
+  <img width="200"  src="https://github.com/PechuanLab/EmbolcallRNAseq/blob/main/IMG_7717.PNG">
 </p>
 
 <!-- badges: start -->
