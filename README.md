@@ -17,7 +17,16 @@ The goal of this package is to provide a set of plotting functions that can aid 
 ``` r
 # To install the package
 library("devtools")
-devtools::install_github("pechuanj/EmbolcallRNAseq", host = "github.roche.com/api/v3")
+devtools::install_github("https://github.com/PechuanLab/EmbolcallRNAseq")
 ```
 
 ## Example
+
+
+
+## Authors
+
+This package was developed by:
+
+- Ximo Pechuan Jorge ([@jopejor](https://github.com/jopejor))
+- Qianbo Sun 

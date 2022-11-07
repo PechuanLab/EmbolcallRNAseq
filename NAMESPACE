@@ -32,6 +32,7 @@ export(topPlot)
 export(BulkPlot)
 export(BulkPlots)
 export(PrepareTopBar)
+export(GostWrap)
 
 # Imports
 import(edgeR)
@@ -39,4 +40,5 @@ import(tidyr)
 import(dplyr)
 import(ComplexHeatmap)
 import(msigdbr)
+import(gprofiler2)
 
