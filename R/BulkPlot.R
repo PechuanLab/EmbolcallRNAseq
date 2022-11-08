@@ -4,30 +4,33 @@
 #' @param Prefix
 #' @param contraste
 #' @param species
+#' @param Foldstatistic
 #'
 #' @return Master wrapper for multiple functions
 #' @export
 #'
 #' @examples BulkPlot()
 
-BulkPlot <- function(signature,Prefix,contraste,species) {
+BulkPlot <- function(signature,Prefix,contraste,species,Foldstatistic = "piFC") {
 	
 	# Some formatting
 	signature$symbol = rownames(signature)
 	signature = signature %>% dplyr::mutate(piFC =  logFC *(-log10(adj.P.Val)))
 	
 	# Save significant genes
-        signature1 = signature %>% dplyr::filter(adj.P.Val<0.05) %>% 
+    signature1 = signature %>% dplyr::filter(adj.P.Val<0.05) %>% 
                      dplyr::arrange(desc(abs(piFC))) %>%  drop_na()
 	write.csv(signature1,paste(Prefix,contraste,"DESignificant.csv",sep="_"))
-	
+
 	# VolcanoPlot
-        VolcanoWrap(signature,Prefix,contraste)
+    VolcanoWrap(signature,Prefix,contraste)
 	# MA plot
-        ma_wrap(signature,contraste,Prefix)
-	
+    ma_wrap(signature,contraste,Prefix)
+    # Gost
+    GostWrap(signature=signature)
+
 	# Prepare for GSEA
-    	stats = GSEAPrepare(signature, Foldstatistic = "piFC",species) 
+    stats = GSEAPrepare(signature, Foldstatistic ,species) 
 	# Run GSEA
-        ClusterProfilerOnthologies(stats,species,Prefix,contraste) 
+    ClusterProfilerOnthologies(stats,species,Prefix,contraste) 
 }

@@ -22,7 +22,9 @@ ClusterProfilerPlots <- function(ewp2,Prefix,contraste,DataBase,geneList){
   fgseaRes = ewp2@result
   write.csv(fgseaRes,paste(Prefix,contraste,DataBase,"GSEATable.csv",sep="_"))
   fgseaRes= fgseaRes %>% dplyr::arrange(pvalue) %>% tibble::as_tibble() %>%
-    dplyr::filter(p.adjust<0.2) %>%dplyr::mutate(Sign = paste("Sign",sign(NES))) %>%dplyr::arrange(desc(NES))
+    dplyr::filter(p.adjust<0.2) %>% 
+    dplyr::mutate(Sign = paste("Sign",sign(NES))) %>% 
+    dplyr::arrange(desc(NES))
 
   # Get the top pathways
   fgseaResTidy = tidyGSEA(fgseaRes)
@@ -32,7 +34,7 @@ ClusterProfilerPlots <- function(ewp2,Prefix,contraste,DataBase,geneList){
     ggpubr::ggbarplot(fgseaResTidy, x = "Description", y = "NES",
               fill = "Sign",           # change fill color by mpg_level
               color = "white",            # Set bar border colors to white
-              palette = c("navy","firebrick"),            # jco journal color palett. see ?ggpar
+              palette = c("navy","firebrick"),  
               sort.val = "asc",          # Sort the value in descending order
               sort.by.groups = FALSE,     # Don't sort inside each group
               x.text.angle = 90,          # Rotate vertically x axis texts
@@ -44,4 +46,40 @@ ClusterProfilerPlots <- function(ewp2,Prefix,contraste,DataBase,geneList){
       theme(legend.position = "none")
   )
   dev.off()
+
+  # Order things a bit
+  y1 = ewp2 %>% filter(qvalues < 0.2) %>% filter(NES < 0) %>%  arrange(desc(abs(NES))) 
+  y2 = ewp2 %>% filter(qvalues < 0.2) %>% filter(NES > 0) %>%  arrange(desc(abs(NES))) 
+  
+  #Top GSEA
+  pdf(paste(DataBase,Prefix,contraste,"NegtopGSEA.pdf",sep="_"))
+  print(
+    try(gseaplot2(y1, geneSetID = 1:min(nrow(y1),4),subplots=1:2),silent =T)
+  )
+  dev.off()
+
+  # Network
+  g =  try(cnetplot(ewp2, foldChange=geneList, colorEdge = TRUE,showCategory = 4),silent =T)
+  g =  try(aescnet(g),silent =T)
+  pdf(paste(DataBase,Prefix,contraste,"EnrichNetWork.pdf",sep="_"))
+  print(
+    g + theme(legend.position="none") 
+  )
+  dev.off()
+
+  # HeatMap
+  pdf(paste(DataBase,Prefix,contraste,"heatmap.pdf",sep="_"))
+  print(
+  heatplot(ewp2, foldChange=geneList, showCategory=5)
+    )
+  dev.off()
+
+  # HeatMap
+  edox2 = pairwise_termsim(ewp2)
+  pdf(paste(DataBase,Prefix,contraste,"treeplot.pdf",sep="_"))
+  print(
+    treeplot(edox2)
+    )
+  dev.off()
+
 }

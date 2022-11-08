@@ -20,11 +20,9 @@ BulkPlots <- function(ExprMat,Prefix,Contrastes,annotations,Treatment,species,lo
   onestan = paste(getwd(),paste(Prefix,"DEPlots",sep="_"),sep="/")
   dir.create(onestan)
   setwd(onestan)
-  # Load Databases for GSEA -- just once 
-  #ListSupport(c(wp2gene,m_h,m_kegg,m_c2,m_c5,m_c7,dbGSEA,cellMarkers,keggdb),LoadGSEADB(species))
 
+  # Loop for all contrasts
   for (i in 1:length(Contrastes)) {
-
     # Get the contrast create the directory
     contraste = Contrastes[i]
     onestan2 = paste(onestan,contraste,sep="/")

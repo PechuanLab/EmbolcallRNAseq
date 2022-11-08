@@ -1,5 +1,3 @@
-
-
 #' Title
 #'
 #' @param signature
@@ -12,7 +10,7 @@
 #' @examples GSEAPrepare( )
 
 GSEAPrepare <- function(signature, Foldstatistic = "piFC",species ) {
-
+  
   # Prepare for GSEA
   fold = signature[,Foldstatistic]
   gene = signature$symbol
