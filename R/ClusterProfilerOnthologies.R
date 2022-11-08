@@ -17,9 +17,9 @@ ClusterProfilerOnthologies <- function(stats,species,Prefix,contraste) {
 
   # WikiPathways
   wpid2name = wp2gene %>% dplyr::select(wpid, name) #TERM2NAME
-  wpid2gene = wp2gene %>% dplyr::select(wpid, gene) #TERM2GENE
+  wpid2geneonly = wp2gene %>% dplyr::select(wpid, gene) #TERM2GENE
   ewp2 =  try(clusterProfiler::GSEA(geneList, 
-                   TERM2GENE = wpid2gene,
+                   TERM2GENE = wpid2geneonly,
                    TERM2NAME = wpid2name, 
                    verbose=FALSE, 
                    pAdjustMethod = "fdr",

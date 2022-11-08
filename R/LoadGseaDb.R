@@ -11,7 +11,8 @@ LoadGSEADB <- function(species){
   # Load all databases
   #Wiki Pathways
   wpgmt = rWikiPathways::downloadPathwayArchive(organism=species, format = "gmt")
-  wp2gene = clusterProfiler::read.gmt(wpgmt)
+  wp2gene = clusterProfiler::read.gmt(wpgmt) %>% 
+  tidyr::separate(term, c("name","version","wpid","org"), "%")
   # MiSig Databases
   msigDB = msigdbr::msigdbr(species = species)
   # Keggg
