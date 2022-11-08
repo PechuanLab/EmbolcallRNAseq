@@ -42,8 +42,8 @@ ClusterProfilerOnthologies <- function(stats,species,Prefix,contraste) {
       pvalueCutoff = 0.2,
       pAdjustMethod = "fdr"),silent =T)
     gseares = DOSE::setReadable(gseares, dbGSEA, keyType = "ENTREZID")
-    write.csv(gseares,paste(Prefix,contraste,subdb,".csv",sep="_"))
-    try(ClusterProfilerPlots(lol,Prefix,contraste,DataBase = subdb,geneList),silent =T)
+    write.csv(gseares,paste(Prefix,contraste,subdbname,".csv",sep="_"))
+    try(ClusterProfilerPlots(lol,Prefix,contraste,DataBase = subdbname,geneList),silent =T)
   }
 
   # KEGG
