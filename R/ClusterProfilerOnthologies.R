@@ -30,10 +30,11 @@ ClusterProfilerOnthologies <- function(stats,species,Prefix,contraste) {
 
   # MsigDB
   testfor = msigDB$gs_cat %>% unique()
+
   for (k in 1:length(testfor)) {
     # Test for all the msigDB gene sets
     subdbname = testfor[k]
-    m_t2g = msigDB %>% filter(gs_cat == subdbname) %>%
+    m_t2g = msigDB %>% dplyr::filter(gs_cat == subdbname) %>%
     dplyr::select(gs_name, entrez_gene)
     # GSEA
     gseares = try(clusterProfiler::GSEA(geneList,

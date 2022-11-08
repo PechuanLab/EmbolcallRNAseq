@@ -68,15 +68,15 @@ ClusterProfilerPlots <- function(ewp2,Prefix,contraste,DataBase,geneList){
   # Network
   g =  try(cnetplot(ewp2, foldChange=geneList, colorEdge = TRUE,showCategory = 4),silent =T)
   g =  try(aescnet(g),silent =T)
-  
-  pdf(paste(DataBase,Prefix,contraste,"EnrichNetWork.pdf",sep="_"), width = 15, height = 15)
+
+  pdf(paste(DataBase,Prefix,contraste,"EnrichNetWork.pdf",sep="_"), width = 18, height = 18)
   print(
     g + theme(legend.position="none") 
   )
   dev.off()
 
   # HeatMap
-  pdf(paste(DataBase,Prefix,contraste,"heatmap.pdf",sep="_"))
+  pdf(paste(DataBase,Prefix,contraste,"heatmap.pdf",sep="_"),width = 25)
   print(
   enrichplot::heatplot(ewp2, foldChange=geneList, showCategory=5)
     )
@@ -84,9 +84,9 @@ ClusterProfilerPlots <- function(ewp2,Prefix,contraste,DataBase,geneList){
 
   # HeatMap
   edox2 = pairwise_termsim(ewp2)
-  pdf(paste(DataBase,Prefix,contraste,"treeplot.pdf",sep="_"))
+  pdf(paste(DataBase,Prefix,contraste,"treeplot.pdf",sep="_"),width = 20, height = 25)
   print(
-    try( treeplot(edox2),silent =T)
+    try(treeplot(edox2),silent =T)
     )
   dev.off()
 
