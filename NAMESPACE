@@ -41,4 +41,6 @@ import(dplyr)
 import(ComplexHeatmap)
 import(msigdbr)
 import(gprofiler2)
+import(enrichplot)
+import(tidyverse)
 

@@ -58,6 +58,13 @@ ClusterProfilerPlots <- function(ewp2,Prefix,contraste,DataBase,geneList){
   )
   dev.off()
 
+  #Top GSEA
+  pdf(paste(DataBase,Prefix,contraste,"PostopGSEA.pdf",sep="_"))
+  print(
+    try(gseaplot2(y2, geneSetID = 1:min(nrow(y1),4),subplots=1:2),silent =T)
+  )
+  dev.off()
+
   # Network
   g =  try(cnetplot(ewp2, foldChange=geneList, colorEdge = TRUE,showCategory = 4),silent =T)
   g =  try(aescnet(g),silent =T)
@@ -70,7 +77,7 @@ ClusterProfilerPlots <- function(ewp2,Prefix,contraste,DataBase,geneList){
   # HeatMap
   pdf(paste(DataBase,Prefix,contraste,"heatmap.pdf",sep="_"))
   print(
-  heatplot(ewp2, foldChange=geneList, showCategory=5)
+  enrichplot::heatplot(ewp2, foldChange=geneList, showCategory=5)
     )
   dev.off()
 
@@ -78,7 +85,7 @@ ClusterProfilerPlots <- function(ewp2,Prefix,contraste,DataBase,geneList){
   edox2 = pairwise_termsim(ewp2)
   pdf(paste(DataBase,Prefix,contraste,"treeplot.pdf",sep="_"))
   print(
-    treeplot(edox2)
+    try( treeplot(edox2),silent =T)
     )
   dev.off()
 

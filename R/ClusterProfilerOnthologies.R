@@ -25,6 +25,7 @@ ClusterProfilerOnthologies <- function(stats,species,Prefix,contraste) {
                    pAdjustMethod = "fdr",
                    by = "fgsea",
                    pvalueCutoff = 0.2), silent =T)
+  # Change to symbol
   ewp2 = DOSE::setReadable(ewp2, dbGSEA, keyType = "ENTREZID")
   ClusterProfilerPlots(ewp2,Prefix,contraste,DataBase="Wiki",geneList)
 

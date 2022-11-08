@@ -11,7 +11,7 @@
 #'
 #' @examples BulkPlot()
 
-BulkPlot <- function(signature,Prefix,contraste,species,Foldstatistic = "piFC") {
+BulkPlot <- function(signature,Prefix,contraste,species,Foldstatistic = "logFC") {
 	
 	# Some formatting
 	signature$symbol = rownames(signature)
