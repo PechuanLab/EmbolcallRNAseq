@@ -33,6 +33,7 @@ export(BulkPlot)
 export(BulkPlots)
 export(PrepareTopBar)
 export(GostWrap)
+export(DEHeatMap)
 
 # Imports
 import(edgeR)
