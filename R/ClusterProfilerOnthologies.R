@@ -11,7 +11,6 @@
 #' @examples ClusterProfilerOnthologies()
 
 ClusterProfilerOnthologies <- function(stats,species,Prefix,contraste) {
-  
   # Stats
   geneList = stats
 
@@ -36,6 +35,7 @@ ClusterProfilerOnthologies <- function(stats,species,Prefix,contraste) {
     subdbname = testfor[k]
     m_t2g = msigDB %>% filter(gs_cat == subdbname) %>%
     dplyr::select(gs_name, entrez_gene)
+    # GSEA
     gseares = try(clusterProfiler::GSEA(geneList,
       TERM2GENE=m_t2g,
       by = "fgsea",
@@ -43,7 +43,8 @@ ClusterProfilerOnthologies <- function(stats,species,Prefix,contraste) {
       pAdjustMethod = "fdr"),silent =T)
     gseares = DOSE::setReadable(gseares, dbGSEA, keyType = "ENTREZID")
     write.csv(gseares,paste(Prefix,contraste,subdbname,".csv",sep="_"))
-    try(ClusterProfilerPlots(gseares,Prefix,contraste,DataBase = subdbname,geneList),silent =T)
+    # Plots
+    ClusterProfilerPlots(gseares,Prefix,contraste,DataBase = subdbname,geneList)
   }
 
   # KEGG
