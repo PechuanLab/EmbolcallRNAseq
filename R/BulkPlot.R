@@ -11,7 +11,7 @@
 #'
 #' @examples BulkPlot()
 
-BulkPlot <- function(signature,Prefix,contraste,species,Foldstatistic = "logFC",fit2) {
+BulkPlot <- function(signature,Prefix,contraste,species,Foldstatistic = "logFC") {
 	
 	# Some formatting
 	signature$symbol = rownames(signature)
@@ -23,7 +23,7 @@ BulkPlot <- function(signature,Prefix,contraste,species,Foldstatistic = "logFC",
 	write.csv(signature1,paste(Prefix,contraste,"DESignificant.csv",sep="_"))
 
 	# Differential expression hmp
-	try(DEHeatMap(Contrastes = contraste ,lfc = 2,fit2),silent =T)
+	DEHeatMap(Contrastes = contraste ,lfc = 2)
 	# VolcanoPlot
     VolcanoWrap(signature,Prefix,contraste)
 	# MA plot

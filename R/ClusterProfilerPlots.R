@@ -76,7 +76,7 @@ ClusterProfilerPlots <- function(ewp2,Prefix,contraste,DataBase,geneList){
   dev.off()
 
   # HeatMap
-  pdf(paste(DataBase,Prefix,contraste,"heatmap.pdf",sep="_"),width = 25)
+  pdf(paste(DataBase,Prefix,contraste,"heatmap.pdf",sep="_"),width = 30)
   print(
   enrichplot::heatplot(ewp2, foldChange=geneList, showCategory=5)
     )

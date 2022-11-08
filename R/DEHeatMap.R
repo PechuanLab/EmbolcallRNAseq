@@ -2,14 +2,14 @@
 #'
 #' @param Contrastes
 #' @param lfc
-#' @param fit2
+#'
 #'
 #' @return Plot for lfc DE genes
 #' @export
 #'
 #' @examples 
 
-DEHeatMap <- function(Contrastes,lfc = 2 ,fit2) {
+DEHeatMap <- function(Contrastes,lfc = 2) {
   # Focus on the lfc > 
   FitTreat = treat(fit2,lfc = lfc)
   signature = topTreat(FitTreat, coef= Contrastes, n=Inf,adjust.method="fdr",sort.by = "P",p.value=0.05) 
