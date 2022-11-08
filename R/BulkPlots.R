@@ -34,7 +34,7 @@ BulkPlots <- function(ExprMat,Prefix,Contrastes,annotations,Treatment,species,lo
     signature = limma::topTreat(fit3, coef=contraste, n=Inf,adjust.method="fdr",sort.by = "P") 
 
     #Bulk Plot
-    BulkPlot(signature,Prefix,contraste,species)
+   try(BulkPlot(signature,Prefix,contraste,species),silent =T)
 
   }
 }
