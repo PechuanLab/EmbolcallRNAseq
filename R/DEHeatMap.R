@@ -9,12 +9,9 @@
 #'
 #' @examples 
 
-DEHeatMap <- function(Contrastes,lfc = 2) {
+DEHeatMap <- function(Contrastes,lfc = 2,ExprMat) {
   # Focus on the lfc > 
   FitTreat = treat(fit2,lfc = lfc)
-  signature = topTreat(FitTreat, coef= Contrastes, n=Inf,adjust.method="fdr",sort.by = "P",p.value=0.05) 
-  write.csv(signature,paste0(Contrastes,"ALL_DE.csv"))
-
   signature = topTreat(FitTreat, coef= Contrastes, n=Inf,adjust.method="fdr",sort.by = "P",p.value=0.05) 
   topdat = ExprMat[rownames(signature),] 
   scaled_mat = t(scale(t(topdat)))

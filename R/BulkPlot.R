@@ -23,7 +23,7 @@ BulkPlot <- function(signature,Prefix,contraste,species,Foldstatistic = "logFC")
 	write.csv(signature1,paste(Prefix,contraste,"DESignificant.csv",sep="_"))
 
 	# Differential expression hmp
-	DEHeatMap(Contrastes = contraste ,lfc = 2)
+	try(DEHeatMap(Contrastes = contraste ,lfc = 2,ExprMat),silent =T)
 	# VolcanoPlot
     VolcanoWrap(signature,Prefix,contraste)
 	# MA plot
