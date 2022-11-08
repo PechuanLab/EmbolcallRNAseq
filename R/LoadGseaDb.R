@@ -22,5 +22,5 @@ LoadGSEADB <- function(species){
     dbGSEA = org.Hs.eg.db::org.Hs.eg.db
     keggdb = "hsa"
   }
-  return(list(wp2gene,m_kegg,msigDB,dbGSEA,keggdb))
+  return(list(wp2gene,msigDB,dbGSEA,keggdb))
 }
