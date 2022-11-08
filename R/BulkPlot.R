@@ -29,7 +29,7 @@ BulkPlot <- function(signature,Prefix,contraste,species,Foldstatistic = "logFC")
 	# MA plot
     ma_wrap(signature,contraste,Prefix)
     # Gost
-    GostWrap(signature=signature)
+    try(GostWrap(signature=signature),silent =T)
 
 	# Prepare for GSEA
     stats = GSEAPrepare(signature, Foldstatistic ,species) 
