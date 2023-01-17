@@ -28,3 +28,4 @@ PrepareTopBar <- function(DiscreteAnnotations,DiscretePalettes,ContinuousPalette
        # Generate Top Bar
        top_bar=ComplexHeatmap::HeatmapAnnotation(df=annotations,col=list_palettes)
       
+}
