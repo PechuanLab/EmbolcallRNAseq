@@ -34,6 +34,7 @@ export(BulkPlots)
 export(PrepareTopBar)
 export(GostWrap)
 export(DEHeatMap)
+export(TalusPlot)
 
 # Imports
 import(edgeR)
