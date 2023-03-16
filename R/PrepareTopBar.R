@@ -7,15 +7,25 @@
 #'
 #' @examples PrepareTopBar()
 
-PrepareTopBar <- function(annotations,list_palettes) {
+PrepareTopBar <- function(DiscreteAnnotations,DiscretePalettes,ContinuousPalettes=NULL,ContinuousAnnotations=NULL) {
        # Name the palettes
-       palette_names = colnames(annotations)
-       names(list_palettes) = palette_names
+       palette_names = colnames(DiscreteAnnotations)
+       names(DiscretePalettes) = palette_names
        # unlist
-       for (i in 1:length(list_palettes)) {
-         names(list_palettes[[i]]) = levels(factor(annotations[,colnames(annotations)[i]]))
+       for (i in 1:length(DiscretePalettes)) {
+         names(DiscretePalettes[[i]]) = levels(factor(DiscreteAnnotations[,colnames(DiscreteAnnotations)[i]]))
 
        }
+       # For the continuous
+       names(ContinuousPalettes) = colnames(ContinuousAnnotations)
+       # Bind Palettes
+       list_palettes = c(DiscretePalettes,ContinuousPalettes)
+       # Bind annotations
+       if (is.null(ContinuousAnnotations)) {
+              annotations = DiscreteAnnotations}
+       else {
+       annotations = cbind(DiscreteAnnotations,ContinuousAnnotations)}
+       # Generate Top Bar
        top_bar=ComplexHeatmap::HeatmapAnnotation(df=annotations,col=list_palettes)
-       return(top_bar)
+      
 }
