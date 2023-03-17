@@ -35,6 +35,10 @@ export(PrepareTopBar)
 export(GostWrap)
 export(DEHeatMap)
 export(TalusPlot)
+export(AlphaPE)
+export(BootAlpha)
+export(ProjectionScore)
+export(ThetaProjectionScore)
 
 # Imports
 import(edgeR)
@@ -45,4 +49,5 @@ import(msigdbr)
 import(gprofiler2)
 import(enrichplot)
 import(tidyverse)
+
 
