@@ -7,7 +7,7 @@
 #' @return Fraction of variance for projection score bootstrapped average
 #' @export
 #'
-#' @examples AlphaPE()
+#' @examples ProjectionScore(DataMatrix)
 #' 
 ProjectionScore <- function(DataMatrix,NPCs =  3, nboot = 100){
   # Tau
