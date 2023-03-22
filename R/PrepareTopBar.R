@@ -1,13 +1,15 @@
 #' Title
 #'
-#' @param annotations
-#' @param list_palettes
+#' @param DiscreteAnnotations
+#' @param DiscretePalettes
+#' @param ContinuousPalettes
+#' @param ContinuousAnnotations
 #' @return Heatmap annotations
 #' @export
 #'
 #' @examples PrepareTopBar()
 
-PrepareTopBar <- function(DiscreteAnnotations,DiscretePalettes,ContinuousPalettes=NULL,ContinuousAnnotations=NULL) {
+PrepareTopBar <- function(DiscreteAnnotations,DiscretePalettes,ContinuousAnnotations=NULL,ContinuousPalettes=NULL) {
        # Name the palettes
        palette_names = colnames(DiscreteAnnotations)
        names(DiscretePalettes) = palette_names
