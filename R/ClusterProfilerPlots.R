@@ -54,14 +54,14 @@ ClusterProfilerPlots <- function(ewp2,Prefix,contraste,DataBase,geneList){
   #Top GSEA
   pdf(paste(DataBase,Prefix,contraste,"NegtopGSEA.pdf",sep="_"))
   print(
-    try(gseaplot2(y1, geneSetID = 1:min(nrow(y1),4),subplots=1:2),silent =T)
+    try(enrichplot::gseaplot2(y1, geneSetID = 1:min(nrow(y1),4),subplots=1:2),silent =T)
   )
   dev.off()
 
   #Top GSEA
   pdf(paste(DataBase,Prefix,contraste,"PostopGSEA.pdf",sep="_"))
   print(
-    try(gseaplot2(y2, geneSetID = 1:min(nrow(y1),4),subplots=1:2),silent =T)
+    try(enrichplot::gseaplot2(y2, geneSetID = 1:min(nrow(y1),4),subplots=1:2),silent =T)
   )
   dev.off()
 
@@ -79,14 +79,6 @@ ClusterProfilerPlots <- function(ewp2,Prefix,contraste,DataBase,geneList){
   pdf(paste(DataBase,Prefix,contraste,"heatmap.pdf",sep="_"),width = 30)
   print(
   enrichplot::heatplot(ewp2, foldChange=geneList, showCategory=5)
-    )
-  dev.off()
-
-  # HeatMap
-  edox2 = pairwise_termsim(ewp2)
-  pdf(paste(DataBase,Prefix,contraste,"treeplot.pdf",sep="_"),width = 20, height = 25)
-  print(
-    try(treeplot(edox2),silent =T)
     )
   dev.off()
 
