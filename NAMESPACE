@@ -43,6 +43,7 @@ export(ProjectionScorePlot)
 export(FilterLowlyExpressed)
 
 # Imports
+import(tidyverse)
 import(latex2exp)
 import(ggpubr)
 import(edgeR)
