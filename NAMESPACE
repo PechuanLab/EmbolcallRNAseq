@@ -41,6 +41,8 @@ export(ProjectionScore)
 export(ThetaProjectionScore)
 export(ProjectionScorePlot)
 export(FilterLowlyExpressed)
+export(GeneScorePlot)
+export(STAMPDeconvolPlot)
 
 # Imports
 import(tidyverse)
