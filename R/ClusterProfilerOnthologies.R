@@ -13,7 +13,6 @@
 ClusterProfilerOnthologies <- function(stats,species,Prefix,contraste) {
   # Stats
   geneList = stats
-
   # WikiPathways
   wpid2name = wp2gene %>% dplyr::select(wpid, name) #TERM2NAME
   wpid2geneonly = wp2gene %>% dplyr::select(wpid, gene) #TERM2GENE
@@ -45,12 +44,7 @@ ClusterProfilerOnthologies <- function(stats,species,Prefix,contraste) {
     gseares = DOSE::setReadable(gseares, dbGSEA, keyType = "ENTREZID")
     write.csv(gseares,paste(Prefix,contraste,subdbname,".csv",sep="_"))
     # Plots
-    ClusterProfilerPlots(gseares,Prefix,contraste,DataBase = subdbname,geneList)
+    try(ClusterProfilerPlots(gseares,Prefix,contraste,DataBase = subdbname,geneList),silent =T)
   }
-
-  # KEGG
-  wut = try(clusterProfiler::gseKEGG(geneList = geneList,organism = keggdb,pvalueCutoff = 0.2),silent =T)
-  wut = DOSE::setReadable(wut, dbGSEA, keyType = "ENTREZID")
-  ClusterProfilerPlots(wut,Prefix,contraste,DataBase = "KEGG",geneList)
 
 }

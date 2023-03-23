@@ -9,13 +9,13 @@
 #'
 #' @examples GSEAPrepare( )
 
-GSEAPrepare <- function(signature, Foldstatistic = "piFC",species ) {
+GSEAPrepare <- function(signature, Foldstatistic = "logFC",species ) {
   
   # Prepare for GSEA
   fold = signature[,Foldstatistic]
   gene = signature$symbol
   p_val_adj = signature$adj.P.Val
-  dat = data.frame(LogFC =fold, Gene = gene, padj = p_val_adj)
+  dat = data.frame(LogFC = fold, Gene = gene, padj = p_val_adj)
 
   if(species == "Mus musculus"){
     dbGSEA = org.Mm.eg.db::org.Mm.eg.db
