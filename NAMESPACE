@@ -43,6 +43,7 @@ export(ProjectionScorePlot)
 export(FilterLowlyExpressed)
 export(GeneScorePlot)
 export(STAMPDeconvolPlot)
+export(GseaPCA)
 
 # Imports
 import(tidyverse)
