@@ -67,7 +67,6 @@ ClusterProfilerPlots <- function(ewp2,Prefix,contraste,DataBase,geneList){
 
   # Network
   g =  try(cnetplot(ewp2, foldChange=geneList, colorEdge = TRUE,showCategory = 4),silent =T)
-  g =  try(aescnet(g),silent =T)
 
   pdf(paste(DataBase,Prefix,contraste,"EnrichNetWork.pdf",sep="_"), width = 18, height = 18)
   print(
