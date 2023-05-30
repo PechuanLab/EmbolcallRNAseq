@@ -54,7 +54,7 @@ ClusterProfilerPlots <- function(ewp2,Prefix,contraste,DataBase,geneList){
   #Top GSEA
   pdf(paste(DataBase,Prefix,contraste,"NegtopGSEA.pdf",sep="_"))
   print(
-    try(enrichplot::gseaplot2(ewp2, geneSetID = y2$ID[1:4],subplots=1:2,pvalue_table = TRUE,color = c( "#ED574EFF","firebrick","#FF7F00","gold")),silent =T)
+    try(enrichplot::gseaplot2(ewp2, geneSetID = y1$ID[1:4],subplots=1:2,pvalue_table = TRUE,color = c( "#ED574EFF","firebrick","#FF7F00","gold")),silent =T)
   )
   dev.off()
 
