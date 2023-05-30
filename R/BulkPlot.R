@@ -18,21 +18,21 @@ BulkPlot <- function(signature,Prefix,contraste,species,Foldstatistic = "logFC")
 	signature = signature %>% dplyr::mutate(piFC =  logFC *(-log10(adj.P.Val)))
 	
 	# Save significant genes
-  signature1 = signature %>% dplyr::filter(adj.P.Val<0.05) %>% 
+  	signature1 = signature %>% dplyr::filter(adj.P.Val<0.05) %>% 
                      dplyr::arrange(desc(abs(piFC))) %>%  drop_na()
 	write.csv(signature1,paste(Prefix,contraste,"DESignificant.csv",sep="_"))
 
 	# Differential expression hmp
 	try(DEHeatMap(Contrastes = contraste ,lfc = 2,ExprMat),silent =T)
 	# VolcanoPlot
-    VolcanoWrap(signature,Prefix,contraste)
+    	VolcanoWrap(signature,Prefix,contraste)
 	# MA plot
-    ma_wrap(signature,contraste,Prefix)
-    # Gost
-    try(GostWrap(signature=signature),silent =T)
+   	 ma_wrap(signature,contraste,Prefix)
+   	 # Gost
+    	try(GostWrap(signature=signature),silent =T)
 
 	# Prepare for GSEA
-    stats = GSEAPrepare(signature, Foldstatistic ,species) 
+   	stats = GSEAPrepare(signature, Foldstatistic ,species) 
 	# Run GSEA
-    ClusterProfilerOnthologies(stats,species,Prefix,contraste) 
+	ClusterProfilerOnthologies(stats,species,Prefix,contraste) 
 }
