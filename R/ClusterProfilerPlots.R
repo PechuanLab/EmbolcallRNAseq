@@ -48,20 +48,20 @@ ClusterProfilerPlots <- function(ewp2,Prefix,contraste,DataBase,geneList){
   dev.off()
 
   # Order things a bit
-  y1 = ewp2 %>% filter(qvalues < 0.2) %>% filter(NES < 0) %>%  arrange(desc(abs(NES))) 
-  y2 = ewp2 %>% filter(qvalues < 0.2) %>% filter(NES > 0) %>%  arrange(desc(abs(NES))) 
+  y1 = fgseaRes %>% filter(qvalue < 0.2) %>% filter(NES < 0) %>%  arrange(desc(abs(NES))) 
+  y2 = fgseaRes %>% filter(qvalue < 0.2) %>% filter(NES > 0) %>%  arrange(desc(abs(NES))) 
   
   #Top GSEA
   pdf(paste(DataBase,Prefix,contraste,"NegtopGSEA.pdf",sep="_"))
   print(
-    try(enrichplot::gseaplot2(y1, geneSetID = 1:min(nrow(y1),4),subplots=1:2),silent =T)
+    try(enrichplot::gseaplot2(ewp2, geneSetID = y2$ID[1:4],subplots=1:2,pvalue_table = TRUE,color = c( "#ED574EFF","firebrick","#FF7F00","gold")),silent =T)
   )
   dev.off()
 
   #Top GSEA
   pdf(paste(DataBase,Prefix,contraste,"PostopGSEA.pdf",sep="_"))
   print(
-    try(enrichplot::gseaplot2(y2, geneSetID = 1:min(nrow(y1),4),subplots=1:2),silent =T)
+    try(enrichplot::gseaplot2(ewp2, geneSetID = y2$ID[1:4],subplots=1:2,pvalue_table = TRUE,color = c("royalblue","gray","#6F9DC4FF","navy")),silent =T)
   )
   dev.off()
 
