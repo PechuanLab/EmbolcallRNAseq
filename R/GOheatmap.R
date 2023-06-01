@@ -22,7 +22,7 @@
 GOHeatMap <- function(scaled_mat,Gomet,nk_Go,organismRef,
                       nHL=5,Csplit,gf = 5,title = "  ",
                       clusCol=T,top_annotation,cust_db=NULL,hl = T,
-                     showrownames = F){
+                     showrownames = F,showcolnames = F){
   # Wraps up the former functions for compact coding, returns a ggplot2 complexheatmap
   # Annotate by Go Terms
   #  Get the corrrect species DB
@@ -57,7 +57,7 @@ GOHeatMap <- function(scaled_mat,Gomet,nk_Go,organismRef,
   }
   # Heatmap
   GoHM =ComplexHeatmap::Heatmap(scaled_mat,
-                  show_column_names = F,
+                  show_column_names = showcolnames,
                   cluster_columns = clusCol,
                   show_column_dend = T,
                   column_names_gp = gpar(fontsize = 2),
