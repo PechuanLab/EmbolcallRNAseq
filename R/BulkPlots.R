@@ -32,9 +32,10 @@ BulkPlots <- function(ExprMat,Prefix,Contrastes,annotations,Treatment,species,lo
     # prepare the fitted limma object
     fit3 = limma::treat(fit2,lfc = 0)
     signature = limma::topTreat(fit3, coef=contraste, n=Inf,adjust.method="fdr",sort.by = "P") 
-
+    # save the whole thing in case you would like to run something else
+    write.csv(signature, paste0(Prefix,contraste,"allGenes.csv"))
     #Bulk Plot
-   try(BulkPlot(signature,Prefix,contraste,species),silent =T)
+    try(BulkPlot(signature,Prefix,contraste,species),silent =T)
 
   }
 }
