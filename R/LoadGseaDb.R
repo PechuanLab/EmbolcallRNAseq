@@ -1,16 +1,14 @@
-#' Title
+#' Loads gene sets for gene onthology analysis and gene set enrichment anlysis.
 #'
-#' @param species
-#'
-#' @return GSEA database
+#' @param species. Dataset reference species either "Mus musculus" or "Homo sapiens".
+#' @param date. To be downloaded rWikipPathWays database date.
+#' @return A list of gene set databases.
+#' @examples 
+#' LoadGSEADB(species = "Mus musculus" ,date="20231010")
 #' @export
-#'
-#' @examples  LoadGSEADB( )
-LoadGSEADB <- function(species){
-
-  # Load all databases
+LoadGSEADB <- function(species,date="20231010"){
   #Wiki Pathways
-  wpgmt = rWikiPathways::downloadPathwayArchive(organism=species, format = "gmt")
+  wpgmt = rWikiPathways::downloadPathwayArchive(organism=species, format = "gmt", date= date)
   wp2gene = clusterProfiler::read.gmt(wpgmt) %>% 
   tidyr::separate(term, c("name","version","wpid","org"), "%")
   # MiSig Databases
