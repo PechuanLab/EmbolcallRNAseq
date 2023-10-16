@@ -11,9 +11,9 @@
 #'
 #' @examples AtlasScoreHeatmap(ExprMat,pure_markers,Csplit,Rsplit,colnamesS=F)
 AtlasScoreHeatmap <- function(ExprMat,pure_markers,Csplit,Rsplit,colnamesS=F) {
-
-
+  # Score the signatures
   pc_matrix = PCscoreMat(ExprMat,pure_markers)
+  # Generate the plot
   h_pc=ComplexHeatmap::Heatmap(pc_matrix,
                show_column_names = colnamesS,
                cluster_columns = TRUE,
