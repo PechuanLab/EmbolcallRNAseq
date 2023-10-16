@@ -34,7 +34,5 @@ AtlasScoreHeatmap <- function(ExprMat,pure_markers,Csplit,Rsplit,colnamesS=F) {
                name="Scaled PC",
                top_annotation = top_bar
   )
-
-
   return(h_pc)
 }
