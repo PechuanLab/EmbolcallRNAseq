@@ -1,5 +1,5 @@
-#' Title
-#'
+#' Generates bootstrap samples of alpha for projection score calculation.
+#' Takes a data matrix and resamples it to obtain a distribution for the fraction of variance explained by a given number of principal components.
 #' @param DataMatrix
 #' @param NPCs
 #' @param nboot
