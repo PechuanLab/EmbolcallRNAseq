@@ -11,7 +11,7 @@
 GseaPCA <- function(PCAToolsObject, npcs = 3, species){
   
   # Get the PCA loadings matrix
-  loadings_mat = p$loadings
+  loadings_mat = PCAToolsObject$loadings
   
   for (i in 1:npcs) {
     # Prepare stats
