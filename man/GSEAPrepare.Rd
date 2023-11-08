@@ -4,7 +4,7 @@
 \alias{GSEAPrepare}
 \title{Title}
 \usage{
-GSEAPrepare(signature, Foldstatistic = "piFC", species)
+GSEAPrepare(signature, Foldstatistic = "logFC", species)
 }
 \arguments{
 \item{species}{}

@@ -16,11 +16,13 @@ GOHeatMap(
   clusCol = T,
   top_annotation,
   cust_db = NULL,
-  hl = T
+  hl = T,
+  showrownames = F,
+  showcolnames = F
 )
 }
 \arguments{
-\item{hl}{}
+\item{showrownames}{}
 }
 \value{
 GO Heatmap

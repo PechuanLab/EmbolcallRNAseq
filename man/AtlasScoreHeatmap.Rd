@@ -2,19 +2,29 @@
 % Please edit documentation in R/AltasScoreHeatmap.R
 \name{AtlasScoreHeatmap}
 \alias{AtlasScoreHeatmap}
-\title{Title}
+\title{STAMP Atlas Score Heatmap. 
+Provides a set of signature scores derived from the STAMP single cell RNA sequencing experiment to quantify relative abundance of the cell types composing the tumor microenvironment.}
 \usage{
 AtlasScoreHeatmap(ExprMat, pure_markers, Csplit, Rsplit, colnamesS = F)
 }
 \arguments{
-\item{colnamesS}{}
+\item{ExprMat.}{Normalized expression data matrix.}
+
+\item{pure_markers.}{Marker set dataframe with two columns, one corresponding to cell types to score and another with the marker signature genes.}
+
+\item{Csplit.}{Plotting parameter to passs to ComplexHeatmap. Split columns.}
+
+\item{Rsplit.}{Plotting parameter to passs to ComplexHeatmap. Split rows.}
+
+\item{colnamesS.}{Plotting parameter to passs to ComplexHeatmap. Show columns names.}
 }
 \value{
-A heatmap with PC score
+A clustered heatmap with PC score for each cell type and sample.
 }
 \description{
-Title
+STAMP Atlas Score Heatmap. 
+Provides a set of signature scores derived from the STAMP single cell RNA sequencing experiment to quantify relative abundance of the cell types composing the tumor microenvironment.
 }
 \examples{
-AtlasScoreHeatmap()
+AtlasScoreHeatmap(ExprMat,pure_markers,Csplit,Rsplit,colnamesS=F)
 }

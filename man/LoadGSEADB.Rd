@@ -2,19 +2,21 @@
 % Please edit documentation in R/LoadGseaDb.R
 \name{LoadGSEADB}
 \alias{LoadGSEADB}
-\title{Title}
+\title{Loads gene sets for gene onthology analysis and gene set enrichment anlysis.}
 \usage{
-LoadGSEADB(species)
+LoadGSEADB(species, date = "20231010")
 }
 \arguments{
-\item{species}{}
+\item{species.}{Dataset reference species either "Mus musculus" or "Homo sapiens".}
+
+\item{date.}{To be downloaded rWikipPathWays database date.}
 }
 \value{
-GSEA database
+A list of gene set databases.
 }
 \description{
-Title
+Loads gene sets for gene onthology analysis and gene set enrichment anlysis.
 }
 \examples{
- LoadGSEADB( )
+LoadGSEADB(species = "Mus musculus" ,date="20231010")
 }
