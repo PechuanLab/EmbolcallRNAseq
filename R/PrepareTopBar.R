@@ -1,10 +1,10 @@
-#' Title
+#' Prepares the annotations for plotting with CompleHeatmap
 #'
 #' @param DiscreteAnnotations
 #' @param DiscretePalettes
 #' @param ContinuousPalettes
 #' @param ContinuousAnnotations
-#' @return Heatmap annotations
+#' @return Complex Heatmap annotations
 #' @export
 #'
 #' @examples PrepareTopBar()
