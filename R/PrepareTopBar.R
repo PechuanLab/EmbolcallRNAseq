@@ -7,7 +7,7 @@
 #' @return Complex Heatmap annotations
 #' @export
 #'
-#' @examples PrepareTopBar()
+#' @examples PrepareTopBar(DiscreteAnnotations,DiscretePalettes,ContinuousAnnotations=NULL,ContinuousPalettes=NULL)
 
 PrepareTopBar <- function(DiscreteAnnotations,DiscretePalettes,ContinuousAnnotations=NULL,ContinuousPalettes=NULL) {
        # Name the palettes
