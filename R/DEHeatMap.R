@@ -17,7 +17,7 @@ DEHeatMap <- function(Contrastes,lfc = 2,ExprMat) {
   scaled_mat = t(scale(t(topdat)))
 
   # Annotate by Go Terms Kegg
-  g = GOHeatMap(scaled_mat = scaled_mat,Gomet = "Kegg",nk = 8,
+  g = GOHeatMap(scaled_mat = scaled_mat,Gomet = "Wiki",nk = 8,
                 organismRef = "Mus musculus",title = paste0("Top ",lfc,Contrastes," Genes"),
                 nHL = 5,Csplit=2,top_annotation = top_bar)
   # PDF
