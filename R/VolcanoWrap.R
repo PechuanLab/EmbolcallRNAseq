@@ -1,14 +1,15 @@
-#' Title
+#' Wrapps EnhancedVolcanoPlot
 #'
-#' @param signature
-#' @param Prefix
-#' @param contraste
-#'
+#' @param signature DE result.
+#' @param Prefix  String to append to title.
+#' @param contraste Title of the plot.
+#' @param listofgenes List of genes to highlight.
 #' @return Volcano plot
 #' @export
 #'
-#' @examples VolcanoWrap( )
-VolcanoWrap <- function(signature,Prefix,contraste) {
+#' @examples VolcanoWrap(signature,Prefix,contraste,listofgenes = NULL)
+#'
+VolcanoWrap <- function(signature,Prefix,contraste,listofgenes = NULL) {
   # VolcanoPlot
   xli = max(abs(signature$logFC))+0.05
   yli = (-log10(min(abs(signature$adj.P.Val))))+0.05
@@ -17,16 +18,17 @@ VolcanoWrap <- function(signature,Prefix,contraste) {
                         lab = signature$symbol,
                         x = 'logFC',
                         y = 'adj.P.Val',
-                        title = "",
+                        title = contraste,
                         subtitle = "",
                         pCutoff = 0.05,
-                        FCcutoff = 1,
+                        FCcutoff = 2,
                         pointSize = 0.3,
                         labSize = 3.0,
                         xlim =c(-xli,xli),
                         ylim = c(0,yli),
                         colAlpha = 0.3,
-                        legendPosition = "none")
+                        legendPosition = "none",
+                        selectLab = listofgenes)
   )
   dev.off()
 
