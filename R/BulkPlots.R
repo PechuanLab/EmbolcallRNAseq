@@ -1,7 +1,7 @@
-#' Title
+#' Loops BulkPlot through a set of limma outputs.
 #'
-#' @param ExprMat
-#' @param Prefix
+#' @param ExprMat  Normalized expression matrix
+#' @param Prefix  String to append to the contrasts
 #' @param Contrastes
 #' @param annotations
 #' @param Treatment
@@ -28,7 +28,7 @@ BulkPlots <- function(ExprMat,Prefix,Contrastes,annotations,Treatment,species,lo
     onestan2 = paste(onestan,contraste,sep="/")
     dir.create(onestan2)
     setwd(onestan2)
-    
+  
     # prepare the fitted limma object
     fit3 = limma::treat(fit2,lfc = 0)
     signature = limma::topTreat(fit3, coef=contraste, n=Inf,adjust.method="fdr",sort.by = "P") 
