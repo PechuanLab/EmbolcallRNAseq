@@ -28,12 +28,12 @@ ma_wrap<-function(signature,contrast,Prefix){
   png(paste(Prefix,contrast,"MA_plot.png",sep=""), units="in", width=5, height=5, res=300)
   print(
     ggpubr::ggmaplot(dat,
-             fdr = 0.05, fc = 1.5, size = 0.4,
+             fdr = 0.05, fc = 2, size = 0.4,
              palette = c("#B31B21", "#1465AC", "darkgray"),
              genenames = as.vector(dat$name),
              select.top.method = c( "padj","fc"),
              legend = "top", top = 25,
-             font.label = c("bold", 11), label.rectangle = TRUE,
+             font.label = c("bold", 8), label.rectangle = TRUE,
              font.legend = "bold",
              font.main = "bold",
              ggtheme = ggplot2::theme_classic())
