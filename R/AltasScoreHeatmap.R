@@ -1,7 +1,7 @@
 #' STAMP Atlas Score Heatmap. 
 #' Provides a set of signature scores derived from the STAMP single cell RNA sequencing experiment to quantify relative abundance of the cell types composing the tumor microenvironment.
 #' @param ExprMat. Normalized expression data matrix.
-#' @param pure_markers. Marker set dataframe with two columns, one corresponding to cell types to score and another with the marker signature genes.
+#' @param MarkerSet. Marker set dataframe with two columns, one corresponding to cell types to score and another with the marker signature genes.
 #' @param Csplit. Plotting parameter to passs to ComplexHeatmap. Split columns.
 #' @param Rsplit. Plotting parameter to passs to ComplexHeatmap. Split rows.
 #' @param colnamesS. Plotting parameter to passs to ComplexHeatmap. Show columns names.
@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples AtlasScoreHeatmap(ExprMat,pure_markers,Csplit,Rsplit,colnamesS=F)
-AtlasScoreHeatmap <- function(ExprMat,pure_markers,Csplit,Rsplit,colnamesS=F) {
+AtlasScoreHeatmap <- function(ExprMat,MarkerSet = pure_markers,Csplit,Rsplit,colnamesS=F) {
   # Score the signatures
   pc_matrix = PCscoreMat(ExprMat,pure_markers)
   # Generate the plot
