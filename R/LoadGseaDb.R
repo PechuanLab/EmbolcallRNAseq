@@ -6,7 +6,7 @@
 #' @examples 
 #' LoadGSEADB(species = "Mus musculus" ,date="20231010")
 #' @export
-LoadGSEADB <- function(species,date="20231010"){
+LoadGSEADB <- function(species,date="current"){
   #Wiki Pathways
   wpgmt = rWikiPathways::downloadPathwayArchive(organism=species, format = "gmt", date= date)
   wp2gene = clusterProfiler::read.gmt(wpgmt) %>% 
