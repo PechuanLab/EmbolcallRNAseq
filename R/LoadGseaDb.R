@@ -4,7 +4,7 @@
 #' @param date. To be downloaded rWikipPathWays database date.
 #' @return A list of gene set databases.
 #' @examples 
-#' LoadGSEADB(species = "Mus musculus" ,date="20231010")
+#' LoadGSEADB(species = "Mus musculus" ,date="current")
 #' @export
 LoadGSEADB <- function(species,date="current"){
   #Wiki Pathways
