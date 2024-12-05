@@ -4,9 +4,9 @@
 #' @param date. To be downloaded rWikipPathWays database date.
 #' @return A list of gene set databases.
 #' @examples 
-#' LoadGSEADB(species = "Mus musculus" ,date="current")
+#' LoadGSEADB(species = "Mus musculus" ,date="20241110")
 #' @export
-LoadGSEADB <- function(species,date="current"){
+LoadGSEADB <- function(species,date="20241110"){
   #Wiki Pathways
   wpgmt = rWikiPathways::downloadPathwayArchive(organism=species, format = "gmt", date= date)
   wp2gene = clusterProfiler::read.gmt(wpgmt) %>% 
