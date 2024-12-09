@@ -1,15 +1,18 @@
-#' Title
+#' Scores samples with a genesets
 #'
-#' @param gm
+#' @param ExprMat
 #' @param summarizationFunction
+#' @param GeneList
 #'
 #' @return PC score
 #' @export
 #'
 #' @examples gsScore( )
 
-gsScore <- function(gm, summarizationFunction="PC") {
-
+gsScore <- function(ExprMat,GeneList,summarizationFunction="PC") {
+  # Restrict to rowspace of expression matrix
+  GeneList = GeneList[GeneList %in% rownames(ExprMat)]
+  gm  = ExprMat[GeneList,]
   if (nrow(gm) == 1){
     gss = gm %>% c()
   } else {
