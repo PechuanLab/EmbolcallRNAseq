@@ -2,18 +2,18 @@
 % Please edit documentation in R/gsScore.R
 \name{gsScore}
 \alias{gsScore}
-\title{Title}
+\title{Scores samples with a genesets}
 \usage{
-gsScore(gm, summarizationFunction = "PC")
+gsScore(ExprMat, GeneList, summarizationFunction = "PC")
 }
 \arguments{
-\item{summarizationFunction}{}
+\item{GeneList}{}
 }
 \value{
 PC score
 }
 \description{
-Title
+Scores samples with a genesets
 }
 \examples{
 gsScore( )

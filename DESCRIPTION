@@ -1,9 +1,11 @@
 Package: EmbolcallRNAseq
 Type: Package
 Title: Differential Expression Analyses
-Version: 0.1.0
-Authors: Qianbo Sun, Ximo Pechuan-Jorge
-Maintainer: The package maintainer <pechuan-jorge.joaquin@gene.com>
+Version: 1.0.0
+Authors@R (parsed):
+    * Sun Qianbo
+    * Ximo Pechuan-i-Jorge
+Maintainer: The package maintainer <xpechuanjorge@revmed.com>
 Description: Perform a curated transcriptomics analysis workflow
 Imports:
     edgeR,
@@ -17,4 +19,4 @@ Depends:
     tidyr (>= 1.2.0),
     ComplexHeatmap (>= 2.10.0),
     msigdbr (>= 7.5.1)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2

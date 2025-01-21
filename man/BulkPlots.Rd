@@ -2,7 +2,7 @@
 % Please edit documentation in R/BulkPlots.R
 \name{BulkPlots}
 \alias{BulkPlots}
-\title{Title}
+\title{Loops BulkPlot through a set of limma outputs.}
 \usage{
 BulkPlots(
   ExprMat,
@@ -15,13 +15,17 @@ BulkPlots(
 )
 }
 \arguments{
+\item{ExprMat}{Normalized expression matrix}
+
+\item{Prefix}{String to append to the contrasts}
+
 \item{logfold}{}
 }
 \value{
 Master wrapper for multiple functions
 }
 \description{
-Title
+Loops BulkPlot through a set of limma outputs.
 }
 \examples{
 BulkPlots()

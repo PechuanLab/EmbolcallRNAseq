@@ -5,12 +5,18 @@
 \title{STAMP Atlas Score Heatmap. 
 Provides a set of signature scores derived from the STAMP single cell RNA sequencing experiment to quantify relative abundance of the cell types composing the tumor microenvironment.}
 \usage{
-AtlasScoreHeatmap(ExprMat, pure_markers, Csplit, Rsplit, colnamesS = F)
+AtlasScoreHeatmap(
+  ExprMat,
+  MarkerSet = pure_markers,
+  Csplit,
+  Rsplit,
+  colnamesS = F
+)
 }
 \arguments{
 \item{ExprMat.}{Normalized expression data matrix.}
 
-\item{pure_markers.}{Marker set dataframe with two columns, one corresponding to cell types to score and another with the marker signature genes.}
+\item{MarkerSet.}{Marker set dataframe with two columns, one corresponding to cell types to score and another with the marker signature genes.}
 
 \item{Csplit.}{Plotting parameter to passs to ComplexHeatmap. Split columns.}
 

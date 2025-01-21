@@ -2,19 +2,26 @@
 % Please edit documentation in R/VolcanoWrap.R
 \name{VolcanoWrap}
 \alias{VolcanoWrap}
-\title{Title}
+\title{Wrapps EnhancedVolcanoPlot}
 \usage{
-VolcanoWrap(signature, Prefix, contraste)
+VolcanoWrap(signature, Prefix, contraste, listofgenes = NULL)
 }
 \arguments{
-\item{contraste}{}
+\item{signature}{DE result.}
+
+\item{Prefix}{String to append to title.}
+
+\item{contraste}{Title of the plot.}
+
+\item{listofgenes}{List of genes to highlight.}
 }
 \value{
 Volcano plot
 }
 \description{
-Title
+Wrapps EnhancedVolcanoPlot
 }
 \examples{
-VolcanoWrap( )
+VolcanoWrap(signature,Prefix,contraste,listofgenes = NULL)
+
 }

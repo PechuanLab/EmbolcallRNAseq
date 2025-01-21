@@ -4,7 +4,7 @@
 \alias{LoadGSEADB}
 \title{Loads gene sets for gene onthology analysis and gene set enrichment anlysis.}
 \usage{
-LoadGSEADB(species, date = "20231010")
+LoadGSEADB(species, date = "20241110")
 }
 \arguments{
 \item{species.}{Dataset reference species either "Mus musculus" or "Homo sapiens".}
@@ -18,5 +18,5 @@ A list of gene set databases.
 Loads gene sets for gene onthology analysis and gene set enrichment anlysis.
 }
 \examples{
-LoadGSEADB(species = "Mus musculus" ,date="20231010")
+LoadGSEADB(species = "Mus musculus" ,date="20241110")
 }
