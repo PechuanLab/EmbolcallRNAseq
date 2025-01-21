@@ -12,6 +12,8 @@
 
 <p align="justify">
 The goal of this package is to provide a set of convenient wrappers and plotting functions that can aid the analysis and interpretation of bulk RNA sequencing data. We rely heavily on exploratory analyses prior to hypothesis testing. By providing a biological pathway annotation on the most informative gene clusters of the datasets we aid the biological interpreation of the results. Alternatively, we provide a simple microenvironment deconvolution for mouse tumor data based on a published reference scRNAseq atlas.
+
+We also provide some useful plots for scRNAseq data analysis.
 </p>
 
 ``` r
