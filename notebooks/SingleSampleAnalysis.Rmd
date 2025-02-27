@@ -1,0 +1,477 @@
+---
+title: "Single Cell Analysis with Seurat"
+output:
+  html_document:
+    toc: true
+    toc_depth: 4
+    theme: united
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+# Summary
+
+
+# 1. Load Packages and Data
+
+We load the required packages and annotate the seurat object with the sample metadata.
+
+```{r libraries, echo=FALSE}
+library(Seurat)
+library(ggplot2)
+library(patchwork)
+library(tidyverse)
+library(SingleR)
+library(EmbolcallRNAseq)
+library(scCustomize)
+library(clustree)
+library(cowplot)
+library(ggpubr)
+library(latex2exp)
+library(celldex)
+
+# QC Folder
+SampleID =  "Test0"
+dir.create(SampleID)
+setwd(SampleID)
+
+# Read cellbender output
+gex = Read_CellBender_h5_Mat("Test.h5")
+seu = CreateSeuratObject(counts = gex)
+
+# Add experiment info
+seu@meta.data$Experiment = "foo"
+seu@meta.data$DetailedID = "bar"
+SampleName = unique(seu@meta.data$DetailedID)
+SampleName
+
+# Rename cells
+seu = RenameCells(object = seu, add.cell.id = SampleName)
+seu
+```
+
+# 2. Sample Level Quality Control
+
+## Preliminary Annotation
+
+First, we add the quality control metrics and prepare for clustering with SCTransform.
+
+```{r,echo=TRUE,tidy=TRUE,warning=FALSE,echo=FALSE}
+# QC Metrics
+seu = Add_Cell_QC_Metrics(seu, species = "Mouse", ensembl_ids = F,
+                          add_cell_cycle = F)
+
+# Quick SCT
+seu = NormalizeData(seu, scale.factor = median(seu@meta.data$nCount_RNA))
+median(seu@meta.data$nCount_RNA)
+
+# Cell Cycle Genes
+s.genes = cc.genes$s.genes %>% tolower() %>% firstup() 
+g2m.genes = cc.genes$g2m.genes %>% tolower() %>% firstup()
+
+
+seu  = CellCycleScoring(seu, s.features = s.genes, g2m.features = g2m.genes, 
+                        set.ident = F)
+seu = SCTransform(seu, verbose = F, conserve.memory = T, 
+                  vars.to.regress = c("S.Score","G2M.Score",
+                                      "percent_ribo","percent_mito"))
+seu = RunPCA(seu,npcs = 100)
+```
+
+Select the number of PCs for clustering using the talus plot.
+
+```{r,tidy=TRUE,warning=FALSE,echo=FALSE}
+ndims = 34
+primer = data.frame(sdev = seu@reductions$pca@stdev)
+TalusPlot(primer,ndims)
+```
+
+Visualize with UMAP.
+
+```{r,tidy=TRUE,warning=FALSE,echo=FALSE}
+# umaps
+seu = FindNeighbors(seu, reduction = "pca", dims = 1:ndims)
+seu = RunUMAP(seu, reduction = "pca", dims = 1:ndims)
+DimPlot(seu)
+```
+
+Annotate before QC identifying the neutrophils.
+
+```{r,tidy=TRUE,warning=FALSE,echo=FALSE}
+# format
+sce = as.SingleCellExperiment(seu,assay = "RNA")
+# load
+immgen =celldex::ImmGenData()
+# Run Single R
+predicted = SingleR(test = sce , ref = immgen ,
+                    labels = colData(immgen)$label.main,
+                    assay.type.ref = "logcounts"
+                    
+)
+# Add metadata to Seurat
+Labels = predicted$labels
+names(Labels) = rownames(predicted)
+seu = AddMetaData(seu, Labels, col.name = "ImmGenLabels")
+table(seu@meta.data$ImmGenLabels)
+# Plot
+DimPlot(seu,group.by = "ImmGenLabels",label = T,
+        pt.size = 1,repel = T,label.size = 3, label.box = T) +
+  ggtitle(unique(seu@meta.data$DetailedID))+NoLegend()
+```
+
+Inspect the preliminary QC indicators.
+
+```{r,tidy=TRUE,warning=FALSE}
+FeaturePlot_scCustom(seu, features  = c("nFeature_RNA", "nCount_RNA",
+                                        "percent_ribo","percent_mito"))
+FeaturePlot_scCustom(seu, features  = c("log10GenesPerUMI", "percent_top50","percent_oxphos","percent_mito_ribo"))
+FeaturePlot_scCustom(seu,features = c("percent_apop","percent_ieg",
+                                      "percent_dna_repair","percent_hemo"))
+```
+
+## QC on neutrophils
+
+```{r,tidy=TRUE,warning=FALSE,echo=FALSE}
+# Save neutrophils prior to QC
+Idents(seu) = seu@meta.data$ImmGenLabels
+neutrophils = subset(seu,idents = "Neutrophils")
+DimPlot(neutrophils)
+FeaturePlot_scCustom(neutrophils, features = c("Ly6g","S100a8"))
+```
+
+Set the QC thresholds for the neutrophils.
+
+```{r,tidy=TRUE,warning=FALSE,echo=FALSE}
+#  Set que QC
+nFeathLow = 300
+nCountHigh = 20000
+riboT = 40
+mitoT = 5
+hemoT = 0.35
+top50T = 80
+qc_dfNeutro = DataFrame("nFeathLowNeu" = nFeathLow,
+                        "nCountHighNeu" = nCountHigh,
+                        "riboTNeu" = riboT,
+                        "mitoTNeu" = mitoT,
+                        "hemoTNeu"=hemoT,
+                        "top50TNeu"=top50T)
+
+# Inspect the thresholds 
+p1 = VlnPlot_scCustom(neutrophils,"nFeature_RNA", pt.size = 0, log = T,
+                      plot_boxplot =T) +
+  geom_hline(yintercept = nFeathLow)+ggtitle(paste0("nFeature_RNA=",nFeathLow))
+p2 = VlnPlot_scCustom(neutrophils,"nFeature_RNA", pt.size = 0, log = F,
+                      plot_boxplot =T) +
+  geom_hline(yintercept = nFeathLow)+ggtitle(paste0("nFeature_RNA=",nFeathLow))
+p3 = VlnPlot_scCustom(neutrophils,"nCount_RNA", pt.size = 0, log = T,
+                      plot_boxplot =T) +
+  geom_hline(yintercept = nCountHigh)+ggtitle(paste0("nCount_RNA=",nCountHigh))
+p4 = VlnPlot_scCustom(neutrophils,"nCount_RNA", pt.size = 0, log = F,
+                      plot_boxplot =T) +
+  geom_hline(yintercept = nCountHigh)+ggtitle(paste0("nCount_RNA=",nCountHigh))
+p5 =VlnPlot_scCustom(neutrophils,"percent_ribo", pt.size = 0, log = F,  
+                     plot_boxplot =T) +
+  geom_hline(yintercept = riboT)+ggtitle(paste0("percent.ribo=",riboT))
+p6 = VlnPlot_scCustom(neutrophils,"percent_mito", pt.size = 0, log =F,
+                      plot_boxplot =T) +
+  geom_hline(yintercept = mitoT)+ggtitle(paste0("percent.mt=",mitoT))
+p7=  VlnPlot_scCustom(neutrophils,"percent_hemo", pt.size = 0, log =F,
+                      plot_boxplot =T) +
+  geom_hline(yintercept = hemoT)+ggtitle(paste0("percent_hemo=",hemoT))
+p8=  VlnPlot_scCustom(neutrophils,"percent_top50", pt.size = 0, log =F,
+                      plot_boxplot =T) +
+  geom_hline(yintercept = top50T)+ggtitle(paste0("percent_top50=",top50T))
+plot_grid(p1,p2,p3,p4,ncol = 2)
+plot_grid(p5,p6,p7,p8,ncol = 2)
+```
+```{r,fig.width=10, fig.height=6,echo=FALSE}
+# Highlight QC
+p1 = highlight_qc_parameter(neutrophils, "nFeature_RNA", nFeathLow)
+p2 = highlight_qc_parameter(neutrophils, "nCount_RNA", nCountHigh)
+p3 = highlight_qc_parameter(neutrophils, "percent_ribo", riboT)
+p4 = highlight_qc_parameter(neutrophils, "percent_mito", mitoT)
+p5 = highlight_qc_parameter(neutrophils, "percent_hemo", hemoT)
+p6 = highlight_qc_parameter(neutrophils, "percent_top50", top50T)
+pref = DimPlot_scCustom(neutrophils, group.by = "ImmGenLabels", label = T, repel = T)
+pref
+plot_grid(p1,p4)
+plot_grid(p3,p2)
+plot_grid(p5,p6)
+```
+
+Subset the neutrophils according to the QC thresholds.
+
+```{r,tidy=TRUE,warning=FALSE}
+neutrophils  = subset(neutrophils, subset = nCount_RNA < nCountHigh & 
+                        percent_mito < mitoT & nFeature_RNA > nFeathLow & 
+                        percent_ribo < riboT & percent_top50 < top50T & 
+                        percent_hemo < hemoT)
+```
+
+## QC on the remaining cells
+
+B cells tend to have higher ribosomal counts, be lenient and plasma cells have very low complexity.
+
+```{r,tidy=TRUE,warning=FALSE,echo=FALSE}
+#  QC on the rest
+seu = subset(seu,idents = "Neutrophils", invert = T)
+DimPlot_scCustom(seu)
+Idents(seu) = seu@meta.data$SampleID
+```
+
+Set the QC thresholds.
+
+```{r,tidy=TRUE,warning=FALSE,echo=FALSE}
+#  Set que QC
+nFeathLow = 500
+nCountHigh = 270000
+riboT = 60
+mitoT = 15
+hemoT = 10
+top50T = 90
+qc_dfRest = DataFrame("nFeathLow" = nFeathLow,
+                        "nCountHigh" = nCountHigh,
+                        "riboT" = riboT,
+                        "mitoT" = mitoT,
+                        "hemoT"=hemoT,
+                        "top50T"=top50T)
+
+# Inspect the thresholds 
+p1 = VlnPlot_scCustom(seu,"nFeature_RNA", pt.size = 0, log = T,
+                      plot_boxplot =T) +
+  geom_hline(yintercept = nFeathLow)+ggtitle(paste0("nFeature_RNA=",nFeathLow))
+p2 = VlnPlot_scCustom(seu,"nFeature_RNA", pt.size = 0, log = F,
+                      plot_boxplot =T) +
+  geom_hline(yintercept = nFeathLow)+ggtitle(paste0("nFeature_RNA=",nFeathLow))
+p3 = VlnPlot_scCustom(seu,"nCount_RNA", pt.size = 0, log = T,
+                      plot_boxplot =T) +
+  geom_hline(yintercept = nCountHigh)+ggtitle(paste0("nCount_RNA=",nCountHigh))
+p4 = VlnPlot_scCustom(seu,"nCount_RNA", pt.size = 0, log = F,
+                      plot_boxplot =T) +
+  geom_hline(yintercept = nCountHigh)+ggtitle(paste0("nCount_RNA=",nCountHigh))
+p5 =VlnPlot_scCustom(seu,"percent_ribo", pt.size = 0, log = F,  
+                     plot_boxplot =T) +
+  geom_hline(yintercept = riboT)+ggtitle(paste0("percent.ribo=",riboT))
+p6 = VlnPlot_scCustom(seu,"percent_mito", pt.size = 0, log =F,
+                      plot_boxplot =T) +
+  geom_hline(yintercept = mitoT)+ggtitle(paste0("percent.mt=",mitoT))
+p7=  VlnPlot_scCustom(seu,"percent_hemo", pt.size = 0, log =F,
+                      plot_boxplot =T) +
+  geom_hline(yintercept = hemoT)+ggtitle(paste0("percent_hemo=",hemoT))
+p8=  VlnPlot_scCustom(seu,"percent_top50", pt.size = 0, log =F,
+                      plot_boxplot =T) +
+  geom_hline(yintercept = top50T)+ggtitle(paste0("percent_top50=",top50T))
+plot_grid(p1,p2,p3,p4,ncol = 2)
+plot_grid(p5,p6,p7,p8,ncol = 2)
+```
+
+Look at the cells to be removed at the larger context.
+
+```{r,fig.width=10, fig.height=6,echo=FALSE}
+# Highlight QC
+p1 = highlight_qc_parameter(seu, "nFeature_RNA", nFeathLow)
+p2 = highlight_qc_parameter(seu, "nCount_RNA", nCountHigh)
+p3 = highlight_qc_parameter(seu, "percent_ribo", riboT)
+p4 = highlight_qc_parameter(seu, "percent_mito", mitoT)
+p5 = highlight_qc_parameter(seu, "percent_hemo", hemoT)
+p6 = highlight_qc_parameter(seu, "percent_top50", top50T)
+pref = DimPlot_scCustom(seu, group.by = "ImmGenLabels", label = T, repel = T)
+pref
+plot_grid(p1,p4)
+plot_grid(p3,p2)
+plot_grid(p5,p6)
+```
+
+
+Subset the rest according to the QC thresholds.
+
+```{r,tidy=TRUE,warning=FALSE,echo=FALSE}
+seu  = subset(seu, subset = nCount_RNA < nCountHigh & 
+                        percent_mito < mitoT & nFeature_RNA > nFeathLow & 
+                        percent_ribo < riboT & percent_top50 < top50T & 
+                        percent_hemo < hemoT)
+seu = merge(seu,neutrophils)
+DefaultAssay(seu) = "RNA"
+DefaultAssay(neutrophils) = "RNA"
+seu = JoinLayers(seu)
+```
+
+# 3. Clustering
+
+## Graph Based Clustering
+
+```{r,tidy=TRUE,warning=FALSE,echo=FALSE}
+# Quick SCT
+seu = NormalizeData(seu, scale.factor = median(seu@meta.data$nCount_RNA))
+median(seu@meta.data$nCount_RNA)
+
+seu  = CellCycleScoring(seu, s.features = s.genes, g2m.features = g2m.genes, set.ident = F)
+seu = SCTransform(seu, verbose = F, conserve.memory = T, 
+                  vars.to.regress = c("S.Score","G2M.Score",
+                                      "percent_ribo","percent_mito"))
+seu = RunPCA(seu,npcs = 150)
+```
+
+Select principal components
+
+```{r,tidy=TRUE,warning=FALSE,echo=FALSE}
+ndims = 50
+primer = data.frame(sdev = seu@reductions$pca@stdev)
+TalusPlot(primer,ndims)
+```
+ 
+Clustering
+
+```{r,tidy=TRUE,warning=FALSE,echo=FALSE}
+# umaps
+seu = FindNeighbors(seu, reduction = "pca", dims = 1:ndims)
+seu = RunUMAP(seu, reduction = "pca", dims = 1:ndims)
+# Resolutions
+resolutions = c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1,1.2,1.5,2)
+for (i in 1:length(resolutions)) {
+  res = resolutions[i]
+  seu = FindClusters(seu, verbose = FALSE,resolution=res)
+}
+
+# Assess clustering
+seu = BuildClusterTree(seu)
+clustree(seu,prefix="SCT_snn_res.", node_colour_aggr = "median")
+```
+
+Pick a clustering resolution that resolves the major cell types.
+
+```{r,tidy=TRUE,warning=FALSE,echo=FALSE}
+Idents(seu) =  seu@meta.data$SCT_snn_res.0.2
+DimPlot_scCustom(seu, group.by = "ImmGenLabels", label = T, repel = T)
+DimPlot_scCustom(seu,label=T)
+```
+
+## Remove Doublets
+
+We will leverage doublet finder.
+
+```{r,tidy=TRUE,warning=FALSE,echo=FALSE}
+library(scDblFinder)
+# format
+sce = as.SingleCellExperiment(seu,assay = "RNA")
+# we run scDblFinder (providing the unusually high doublet rate)
+sce = scDblFinder(sce, clusters = T)
+table(call=sce$scDblFinder.class)
+# Add metadata to Seurat
+DBFinderMeta = colData(sce)[,c("scDblFinder.cluster",         
+ "scDblFinder.class",            "scDblFinder.score" ,          
+"scDblFinder.weighted" ,        "scDblFinder.difficulty" ,     
+"scDblFinder.cxds_score",     "scDblFinder.mostLikelyOrigin",
+"scDblFinder.originAmbiguous" )]
+seu = AddMetaData(seu, metadata = as.data.frame(DBFinderMeta))
+DimPlot_scCustom(seu, group.by = "scDblFinder.cluster")
+DimPlot_scCustom(seu, group.by = "scDblFinder.class")
+seu = subset(seu, scDblFinder.class =="singlet" )
+```
+
+## Last Viev of QC
+
+Inspect QC metric one last time to detect anomalous clusters.
+
+```{r,tidy=TRUE,warning=FALSE}
+FeaturePlot_scCustom(seu, features  = c("nFeature_RNA", "nCount_RNA",
+                                        "percent_ribo","percent_mito"))
+FeaturePlot_scCustom(seu, features  = c("log10GenesPerUMI", "percent_top50","percent_oxphos","percent_ieg"))
+```
+
+# 4. Markers by Cluster
+
+## Top Unbiased Markers by Cluster
+
+Inspect the top markers to guide annotation.
+
+```{r,tidy=TRUE,warning=FALSE,echo=FALSE}
+DefaultAssay(seu) = "RNA"
+seu = NormalizeData(seu, scale.factor = median(seu@meta.data$nCount_RNA))
+seu = ScaleData(seu)
+median(seu@meta.data$nCount_RNA)
+Markers = FindAllMarkers(seu,only.pos = T,
+                         logfc.threshold = 0.7,
+                         min.pct = 0.7,assay = "RNA")
+Markers = Markers %>% filter(p_val_adj<0.05)
+topMarkers =  Markers %>% group_by(cluster) %>% top_n(avg_log2FC,n=10)
+
+DT::datatable(topMarkers)
+```
+
+Inspect the markers.
+
+```{r,tidy=TRUE,warning=FALSE,fig.width=12, fig.height=10,echo=FALSE}
+DimPlot_scCustom(seu,label =T)
+DoHeatmap(object = seu, features = unique(topMarkers$gene),
+          cells = Random_Cells_Downsample(seurat_object = seu, 
+                                          num_cells = 250, 
+                                          allow_lower = T))+
+  theme(axis.text.y = element_text(size = 5.5)) +  
+  scale_fill_gradientn(colors =  c("steelblue1", "white", "tomato"))
+```
+
+## Markers of Interests
+
+### Cell Type
+
+```{r,fig.width=10, fig.height=8,echo=FALSE}
+FeaturePlot_scCustom(seu, features  = c())
+```
+
+
+# 5. Annotation
+
+Run Single R for the fine labels.
+
+```{r,echo=FALSE}
+predicted = SingleR(test = sce , ref = immgen ,
+                    labels = colData(immgen)$label.fine,
+                    assay.type.ref = "logcounts"
+                    
+)
+
+# Add metadata to Seurat
+Labels = predicted$labels
+names(Labels) = rownames(predicted)
+seu = AddMetaData(seu, Labels, col.name = "ImmGenLabelsFine")
+
+DT::datatable(table(Idents(seu),seu@meta.data$ImmGenLabelsFine))
+
+DimPlot(seu,group.by = "ImmGenLabelsFine",label = T,
+        pt.size = 1,repel = T,label.size = 2, label.box = T) +
+  ggtitle(paste0(SampleName,":",unique(seu@meta.data$Treatment)))+NoLegend()
+```
+
+Finally Annotate the clusters by big compartments.
+
+```{r,error=TRUE,echo=FALSE}
+DimPlot_scCustom(seu, label = T)
+DimPlot_scCustom(seu,group.by = "ImmGenLabels",label = T)
+```
+
+```{r, error=TRUE,echo=FALSE}
+# Pick from Lymphoid , Myeloid , TumorCells and Stroma
+seu = RenameIdents(seu, "0" = "TumorCells",
+                   "1"="TumorCells",
+                   "2"="Myeloid",
+                   "3"="Lymphoid",
+                   "4" = "Myeloid"
+                   )
+DimPlot_scCustom(seu,group.by = "ImmGenLabels",label = T)
+seu@meta.data$TME = Idents(seu)
+DimPlot(seu, label = T) 
+```
+
+# Save
+
+```{r,echo=FALSE}
+dir ="."
+saveRDS(object = seu, file= paste0(dir,unique(seu@meta.data$DetailedID),"_QC.rds"))
+```
+
+
+
+

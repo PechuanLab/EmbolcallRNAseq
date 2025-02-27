@@ -2,7 +2,7 @@
 % Please edit documentation in R/BulkPlots.R
 \name{BulkPlots}
 \alias{BulkPlots}
-\title{Loops BulkPlot through a set of limma outputs.}
+\title{Loops BulkPlot through a set of limma outputs}
 \usage{
 BulkPlots(
   ExprMat,
@@ -15,18 +15,27 @@ BulkPlots(
 )
 }
 \arguments{
-\item{ExprMat}{Normalized expression matrix}
+\item{ExprMat}{Normalized expression matrix.}
 
-\item{Prefix}{String to append to the contrasts}
+\item{Prefix}{String to append to the contrasts.}
 
-\item{logfold}{}
+\item{Contrastes}{A vector of contrast names.}
+
+\item{annotations}{Annotations for the genes (not used in the function but can be included for completeness).}
+
+\item{Treatment}{Treatment conditions (not used in the function but can be included for completeness).}
+
+\item{species}{A character string indicating the species (e.g., "human", "mouse").}
+
+\item{logfold}{Log fold change threshold for differential expression.}
 }
 \value{
-Master wrapper for multiple functions
+This function does not return a value but generates several output files and plots.
 }
 \description{
-Loops BulkPlot through a set of limma outputs.
+This function loops through a set of contrasts from limma outputs and generates various plots and files for differential gene expression analysis.
 }
 \examples{
-BulkPlots()
+# Example usage:
+BulkPlots(ExprMat, Prefix = "Sample", Contrastes = c("ConditionA_vs_ConditionB", "ConditionC_vs_ConditionD"), annotations, Treatment, species = "human", logfold = 1)
 }
