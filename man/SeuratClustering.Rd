@@ -20,6 +20,3 @@ A Seurat object with updated clustering information.
 This function removes columns from the metadata of a Seurat object that start with a specified prefix,
 and then finds clusters at specified resolutions.
 }
-\examples{
-seu <- SeuratClustering(seu, "res_", c(0.1, 0.2, 0.3, 0.4, 0.5))
-}

@@ -5,11 +5,13 @@
 #' @param seurats A character vector of file paths to the Seurat objects to be merged.
 #' @return A merged Seurat object with joined layers.
 #' @examples
+#' @export
 #' \dontrun{
 #' seurats <- c("path/to/seurat1.rds", "path/to/seurat2.rds")
-#' merged_seurat <- merge_seurat_objects(seurats)
+#' merged_seurat <- SeuratMerge(seurats)
 #' }
-merge_seurat_objects <- function(seurats) {
+
+SeuratMerge <- function(seurats) {
   # Read the first Seurat object
   seu <- readRDS(seurats[1])
   seu <- CreateSeuratObject(counts = seu[['RNA']]$counts, 
@@ -30,8 +32,3 @@ merge_seurat_objects <- function(seurats) {
   # Return the merged Seurat object
   return(seu)
 }
-
-# Example usage
-# seurats <- c("path/to/seurat1.rds", "path/to/seurat2.rds")
-# merged_seurat <- merge_seurat_objects(seurats)
-# table(merged_seurat@meta.data$DetailedID)

@@ -8,6 +8,7 @@
 #' @param resolutions A numeric vector of resolutions at which to find clusters.
 #' @return A Seurat object with updated clustering information.
 #' @examples
+#' @export
 #' seu <- SeuratClustering(seu, "res_", c(0.1, 0.2, 0.3, 0.4, 0.5))
 SeuratClustering <- function(seu, prefix, resolutions) {
   # Remove columns with the specified prefix from the metadata
