@@ -2,22 +2,28 @@
 % Please edit documentation in R/BootAlpha.R
 \name{BootAlpha}
 \alias{BootAlpha}
-\title{Generates bootstrap samples of alpha for projection score calculation.
-Takes a data matrix and resamples it to obtain a distribution for the fraction of variance explained by a given number of principal components.}
+\title{Generates bootstrap samples of alpha for projection score calculation.}
 \usage{
 BootAlpha(DataMatrix, NPCs = 3, nboot = 100)
 }
 \arguments{
-\item{nboot}{}
+\item{DataMatrix}{A numeric matrix where rows represent samples and columns represent variables.}
+
+\item{NPCs}{An integer specifying the number of principal components to consider. Default is 3.}
+
+\item{nboot}{An integer specifying the number of bootstrap samples to generate. Default is 100.}
 }
 \value{
-Fraction of variance for projection score bootstrapped average
+A numeric value representing the bootstrapped average of the fraction of variance for the projection score.
 }
 \description{
-Generates bootstrap samples of alpha for projection score calculation.
-Takes a data matrix and resamples it to obtain a distribution for the fraction of variance explained by a given number of principal components.
+This function takes a data matrix and resamples it to obtain a distribution for the fraction of variance explained by a given number of principal components.
 }
 \examples{
-AlphaPE()
-
+\dontrun{
+# Example usage
+DataMatrix <- matrix(rnorm(100), nrow = 10)
+result <- BootAlpha(DataMatrix, NPCs = 3, nboot = 100)
+print(result)
+}
 }

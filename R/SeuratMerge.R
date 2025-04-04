@@ -4,12 +4,8 @@
 #'
 #' @param seurats A character vector of file paths to the Seurat objects to be merged.
 #' @return A merged Seurat object with joined layers.
-#' @examples
 #' @export
-#' \dontrun{
-#' seurats <- c("path/to/seurat1.rds", "path/to/seurat2.rds")
-#' merged_seurat <- SeuratMerge(seurats)
-#' }
+#' @examples SeuratMerge(seurats)
 
 SeuratMerge <- function(seurats) {
   # Read the first Seurat object

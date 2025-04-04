@@ -7,9 +7,12 @@
 #' @param prefix A string encoding the prefix of the columns to be removed from the metadata.
 #' @param resolutions A numeric vector of resolutions at which to find clusters.
 #' @return A Seurat object with updated clustering information.
-#' @examples
 #' @export
+#' @examples
+#' \dontrun{
 #' seu <- SeuratClustering(seu, "res_", c(0.1, 0.2, 0.3, 0.4, 0.5))
+#' }
+
 SeuratClustering <- function(seu, prefix, resolutions) {
   # Remove columns with the specified prefix from the metadata
   seu@meta.data <- seu@meta.data[, !grepl(paste0("^", prefix), colnames(seu@meta.data))]

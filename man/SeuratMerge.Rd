@@ -15,3 +15,6 @@ A merged Seurat object with joined layers.
 \description{
 This function reads multiple Seurat objects from a list of file paths, merges them into a single Seurat object, and joins the layers.
 }
+\examples{
+SeuratMerge(seurats)
+}
