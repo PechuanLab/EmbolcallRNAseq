@@ -7,14 +7,20 @@
 topPlot(signature1, ExprMat, Treatment, contraste)
 }
 \arguments{
-\item{contraste}{}
+\item{signature1}{DataFrame containing gene signatures with columns including 'symbol' and 'piFC'.}
+
+\item{ExprMat}{Matrix of normalized expression values with genes as rows and samples as columns.}
+
+\item{Treatment}{Vector indicating the treatment group for each sample in ExprMat.}
+
+\item{contraste}{String representing the contrast condition for the plot title and file name.}
 }
 \value{
-Jitter plot
+Jitter plot saved as a PDF file for the top 10 genes (5 upregulated and 5 downregulated).
 }
 \description{
 Title
 }
 \examples{
-topPlot( )
+topPlot(signature1, ExprMat, Treatment, contraste)
 }
