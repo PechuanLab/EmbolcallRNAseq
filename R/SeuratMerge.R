@@ -5,6 +5,7 @@
 #' @param seurats A character vector of file paths to the Seurat objects to be merged.
 #' @return A merged Seurat object with joined layers.
 #' @export
+#'
 #' @examples SeuratMerge(seurats)
 
 SeuratMerge <- function(seurats) {
