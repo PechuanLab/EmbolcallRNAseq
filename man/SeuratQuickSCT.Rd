@@ -4,12 +4,14 @@
 \alias{SeuratQuickSCT}
 \title{Process Seurat Object with SCTransform, PCA, and UMAP}
 \usage{
-SeuratQuickSCT(seu, ndims = 30)
+SeuratQuickSCT(seu, ndims = 30, npcs = 50)
 }
 \arguments{
 \item{seu}{A Seurat object to be processed.}
 
 \item{ndims}{An integer specifying the number of dimensions to use for PCA and UMAP. Default is 30.}
+
+\item{npcs}{Number of principal components to be calculated.}
 }
 \value{
 A processed Seurat object with normalized data, cell cycle scores, PCA, UMAP, and clusters.
@@ -22,6 +24,6 @@ at multiple resolutions.
 \examples{
 \dontrun{
   # Assuming 'seurat_object' is your Seurat object
-  seurat_object <- SeuratQuickSCT(seurat_object, ndims = 30)
+  seurat_object <- SeuratQuickSCT(seurat_object, ndims = 30, npcs = 50)
 }
 }
