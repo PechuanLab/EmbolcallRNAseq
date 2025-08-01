@@ -6,6 +6,7 @@
 #'
 #' @param seu A Seurat object to be processed.
 #' @param ndims An integer specifying the number of dimensions to use for PCA and UMAP. Default is 30.
+#' @param npcs Number of principal components to be calculated.
 #'
 #' @return A processed Seurat object with normalized data, cell cycle scores, PCA, UMAP, and clusters.
 #' @export
@@ -13,9 +14,9 @@
 #' @examples
 #' \dontrun{
 #'   # Assuming 'seurat_object' is your Seurat object
-#'   seurat_object <- SeuratQuickSCT(seurat_object, ndims = 30)
+#'   seurat_object <- SeuratQuickSCT(seurat_object, ndims = 30, npcs = 50)
 #' }
-SeuratQuickSCT <- function(seu, ndims = 30) {
+SeuratQuickSCT <- function(seu, ndims = 30, npcs = 50) {
   # Normalize data
   seu <- NormalizeData(seu, scale.factor = median(seu@meta.data$nCount_RNA))
   
@@ -29,7 +30,7 @@ SeuratQuickSCT <- function(seu, ndims = 30) {
                      vars.to.regress = c("S.Score", "G2M.Score", "percent_ribo", "percent_mito"))
   
   # Run PCA
-  seu <- RunPCA(seu, npcs = 150)
+  seu <- RunPCA(seu, npcs = npcs)
   
   # Find neighbors and run UMAP
   seu <- FindNeighbors(seu, reduction = "pca", dims = 1:ndims)
