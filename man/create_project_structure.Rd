@@ -18,5 +18,5 @@ under a user-specified top-level directory. The structure includes folders for d
 source code, QC, clustering, analysis, figures, slides, and paper drafts.
 }
 \examples{
-create_project_structure("MyProject")
+create_project_structure(top_dir = "MyProject")
 }

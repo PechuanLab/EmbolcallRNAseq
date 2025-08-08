@@ -6,8 +6,10 @@
 #'
 #' @param top_dir Character. The name of the top-level directory where the structure will be created.
 #' @return Creates directories on disk. Returns a message upon successful creation.
+#' @export
 #' @examples
-#' create_project_structure("MyProject")
+#' create_project_structure(top_dir = "MyProject")
+
 create_project_structure <- function(top_dir = "NewProject") {
   # Define the relative paths of all subdirectories
   dirs <- c(

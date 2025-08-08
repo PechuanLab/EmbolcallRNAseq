@@ -2,19 +2,29 @@
 % Please edit documentation in R/ClusterProfilerOnthologies.R
 \name{ClusterProfilerOnthologies}
 \alias{ClusterProfilerOnthologies}
-\title{Title}
+\title{Perform Gene Set Enrichment Analysis (GSEA) and Generate Plots}
 \usage{
 ClusterProfilerOnthologies(stats, species, Prefix, contraste)
 }
 \arguments{
-\item{contraste}{}
+\item{stats}{A named numeric vector representing the gene list for GSEA. The names should correspond to gene identifiers, and the values should represent the ranking metric (e.g., log fold change or statistical significance).}
+
+\item{species}{A string specifying the species being analyzed (e.g., "human", "mouse"). This parameter is not directly used in the function but may be relevant for upstream data preparation.}
+
+\item{Prefix}{A string used as a prefix for output file names and plot titles.}
+
+\item{contraste}{A string specifying the contrast or condition being analyzed. This is used in output file names and plot titles.}
 }
 \value{
-Plots
+This function generates plots and writes CSV files as output. It does not return any R objects directly.
 }
 \description{
-Title
+This function performs Gene Set Enrichment Analysis (GSEA) using WikiPathways and MSigDB gene sets, and generates plots to visualize the results. It also writes the results to CSV files for MSigDB gene sets.
 }
 \examples{
-ClusterProfilerOnthologies()
+# Example usage:
+# Assuming `stats` is a named numeric vector of gene rankings,
+# `species` is "human", `Prefix` is "Experiment1", and `contraste` is "ConditionA":
+ClusterProfilerOnthologies(stats, "human", "Experiment1", "ConditionA")
+
 }

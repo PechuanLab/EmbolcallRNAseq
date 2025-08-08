@@ -17,5 +17,4 @@ This function returns a specified color palette.
 }
 \examples{
 ColorPalettes("palette1")
-ColorPalettes("palette2")
 }

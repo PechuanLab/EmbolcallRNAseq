@@ -2,16 +2,26 @@
 % Please edit documentation in R/DEHeatMap.R
 \name{DEHeatMap}
 \alias{DEHeatMap}
-\title{Title}
+\title{Generate a Heatmap for Differentially Expressed Genes}
 \usage{
 DEHeatMap(Contrastes, lfc = 2, ExprMat)
 }
 \arguments{
-\item{lfc}{}
+\item{Contrastes}{A string specifying the contrast or condition being analyzed. This is used to extract DE genes and name the output files.}
+
+\item{lfc}{A numeric value specifying the log fold change threshold for identifying DE genes. Default is 2.}
+
+\item{ExprMat}{A numeric matrix of gene expression values, where rows correspond to genes and columns correspond to samples.}
 }
 \value{
-Plot for lfc DE genes
+A heatmap plot for DE genes is generated and saved as a PDF file. The function does not return an R object directly.
 }
 \description{
-Title
+This function generates a heatmap for differentially expressed (DE) genes based on a specified log fold change (lfc) threshold. It uses the `treat` function to identify DE genes and scales the expression matrix for visualization. The heatmap can also include annotations based on GO terms or KEGG pathways.
+}
+\examples{
+# Example usage:
+# Assuming `Contrastes` is "ConditionA_vs_Control", `lfc` is 2, and `ExprMat` is a matrix of expression data:
+DEHeatMap("ConditionA_vs_Control", lfc = 2, ExprMat)
+
 }

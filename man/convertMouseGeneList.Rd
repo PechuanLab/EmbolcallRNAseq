@@ -2,19 +2,24 @@
 % Please edit documentation in R/convertMouseGeneList.R
 \name{convertMouseGeneList}
 \alias{convertMouseGeneList}
-\title{Title}
+\title{Convert Mouse Gene Symbols to Human Gene Symbols}
 \usage{
 convertMouseGeneList(x)
 }
 \arguments{
-\item{x}{}
+\item{x}{A character vector of mouse gene symbols (e.g., "mgi_symbol").}
 }
 \value{
-Unique gene
+A character vector of unique human gene symbols corresponding to the input mouse gene symbols.
 }
 \description{
-Title
+This function converts a list of mouse gene symbols to their corresponding human gene symbols using the `biomaRt` package. It queries the Ensembl database to perform the mapping.
 }
 \examples{
-convertMouseGeneList()
+# Example usage:
+# Assuming `mouse_genes` is a character vector of mouse gene symbols:
+mouse_genes <- c("Tnf", "Il6", "Cd4")
+human_genes <- convertMouseGeneList(mouse_genes)
+print(human_genes)
+
 }
