@@ -4,19 +4,21 @@
 \alias{create_project_structure}
 \title{Create a Standard Project Directory Structure}
 \usage{
-create_project_structure(top_dir = "NewProject")
+create_project_structure(top_dir = "NewProject", project_type = "scRNAseq")
 }
 \arguments{
 \item{top_dir}{Character. The name of the top-level directory where the structure will be created.}
+
+\item{project_type}{Character. Type of project: "scRNAseq" or "BulkRNAseq".}
 }
 \value{
 Creates directories on disk. Returns a message upon successful creation.
 }
 \description{
 This function creates a predefined directory structure for a computational biology project
-under a user-specified top-level directory. The structure includes folders for data,
-source code, QC, clustering, analysis, figures, slides, and paper drafts.
+under a user-specified top-level directory. The structure varies depending on the project type:
+"scRNAseq" or "BulkRNAseq".
 }
 \examples{
-create_project_structure(top_dir = "MyProject")
+create_project_structure(top_dir = "MyProject", project_type = "scRNAseq")
 }

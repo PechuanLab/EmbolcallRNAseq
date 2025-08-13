@@ -1,17 +1,34 @@
-#' Title
+#' Functional Enrichment of Gene Clusters
 #'
-#' @param expmat
-#' @param nk
-#' @param scale
-#' @param organism
-#' @param top_go
-#' @param Method
-#' @param cust_db
+#' Performs functional enrichment analysis on gene clusters derived from an expression matrix.
+#' Supports GO, WikiPathways, KEGG, and custom enrichment databases. The function clusters genes,
+#' converts gene symbols to identifiers, and returns top enriched terms per cluster.
 #'
-#' @return Objects to GOHeatmap
+#' @param expmat A numeric matrix of gene expression values (genes × samples).
+#' @param nk Integer. Number of clusters to identify in the expression matrix.
+#' @param scale Logical. If TRUE, scales the expression matrix before clustering. Default is TRUE.
+#' @param organism Character. Organism name, either "Mus musculus" or "Homo sapiens".
+#' @param top_go Integer. Number of top enriched terms to return per cluster. Default is 3.
+#' @param Method Character. Enrichment method to use. One of "GO", "Wiki", "Kegg", or "Custom".
+#' @param cust_db Data frame. Custom TERM2GENE mapping used when Method = "Custom".
+#'
+#' @return A named list with two elements:
+#' \describe{
+#'   \item{go_result}{A list of data frames, each containing enrichment results for a cluster.}
+#'   \item{marker_label}{A vector of cluster assignments for each gene.}
+#' }
+#'
 #' @export
 #'
-#' @examples enrich_out()
+#' @examples
+#' \dontrun{
+#' result <- enrich_out(expmat = my_expression_matrix,
+#'                      nk = 5,
+#'                      scale = TRUE,
+#'                      organism = "Homo sapiens",
+#'                      top_go = 3,
+#'                      Method = "GO")
+#' }
 enrich_out<-function(expmat,nk,scale=TRUE,organism,
                      top_go=3,
                      Method = c("GO","Wiki","Kegg","Custom"),

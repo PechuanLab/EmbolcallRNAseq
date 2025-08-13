@@ -2,7 +2,7 @@
 % Please edit documentation in R/enrich_out.R
 \name{enrich_out}
 \alias{enrich_out}
-\title{Title}
+\title{Functional Enrichment of Gene Clusters}
 \usage{
 enrich_out(
   expmat,
@@ -15,14 +15,39 @@ enrich_out(
 )
 }
 \arguments{
-\item{cust_db}{}
+\item{expmat}{A numeric matrix of gene expression values (genes × samples).}
+
+\item{nk}{Integer. Number of clusters to identify in the expression matrix.}
+
+\item{scale}{Logical. If TRUE, scales the expression matrix before clustering. Default is TRUE.}
+
+\item{organism}{Character. Organism name, either "Mus musculus" or "Homo sapiens".}
+
+\item{top_go}{Integer. Number of top enriched terms to return per cluster. Default is 3.}
+
+\item{Method}{Character. Enrichment method to use. One of "GO", "Wiki", "Kegg", or "Custom".}
+
+\item{cust_db}{Data frame. Custom TERM2GENE mapping used when Method = "Custom".}
 }
 \value{
-Objects to GOHeatmap
+A named list with two elements:
+\describe{
+  \item{go_result}{A list of data frames, each containing enrichment results for a cluster.}
+  \item{marker_label}{A vector of cluster assignments for each gene.}
+}
 }
 \description{
-Title
+Performs functional enrichment analysis on gene clusters derived from an expression matrix.
+Supports GO, WikiPathways, KEGG, and custom enrichment databases. The function clusters genes,
+converts gene symbols to identifiers, and returns top enriched terms per cluster.
 }
 \examples{
-enrich_out()
+\dontrun{
+result <- enrich_out(expmat = my_expression_matrix,
+                     nk = 5,
+                     scale = TRUE,
+                     organism = "Homo sapiens",
+                     top_go = 3,
+                     Method = "GO")
+}
 }
