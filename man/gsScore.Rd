@@ -2,19 +2,26 @@
 % Please edit documentation in R/gsScore.R
 \name{gsScore}
 \alias{gsScore}
-\title{Scores samples with a genesets}
+\title{Score samples using a gene set}
 \usage{
 gsScore(ExprMat, GeneList, summarizationFunction = "PC")
 }
 \arguments{
-\item{GeneList}{}
+\item{ExprMat}{A numeric matrix of gene expression values with genes as rows and samples as columns.}
+
+\item{GeneList}{A character vector of gene symbols to be used for scoring.}
+
+\item{summarizationFunction}{A string indicating the summarization method: "PC" (default) for principal component analysis, or "mean" for average expression.}
 }
 \value{
-PC score
+A numeric vector of scores for each sample.
 }
 \description{
-Scores samples with a genesets
+This function computes a score for each sample in an expression matrix based on a provided gene set.
+The score can be summarized using either the first principal component (PC) or the mean expression.
 }
 \examples{
-gsScore( )
+# Example usage:
+# gsScore(expression_matrix, c("GeneA", "GeneB", "GeneC"))
+# gsScore(expression_matrix, gene_set, summarizationFunction = "mean")
 }

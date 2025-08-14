@@ -2,19 +2,30 @@
 % Please edit documentation in R/ListSupport.R
 \name{ListSupport}
 \alias{ListSupport}
-\title{Title}
+\title{Assign multiple values to multiple variables}
 \usage{
 ListSupport(lhs, rhs)
 }
 \arguments{
-\item{rhs}{}
+\item{lhs}{A list of variable names (unquoted) to assign values to.}
+
+\item{rhs}{A list of values, a function, or a formula to assign to the variables in `lhs`.}
 }
 \value{
-Master wrapper for multiple functions
+Invisibly returns `NULL`. The primary effect is assignment in the parent frame.
 }
 \description{
-Title
+This function acts as a flexible wrapper to assign values from a list or function to multiple variables.
+It supports assigning a single value to one variable, or multiple values to multiple variables.
+If fewer values are provided than variables, the remaining variables are assigned `NULL`.
 }
 \examples{
-ListSupport()
+# Assign multiple values
+ListSupport(a, b, c) <- list(1, 2, 3)
+
+# Assign a single value
+ListSupport(x) <- 42
+
+# Assign fewer values than variables
+ListSupport(p, q, r) <- list("apple", "banana")
 }

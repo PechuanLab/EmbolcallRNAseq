@@ -47,7 +47,7 @@ create_project_structure <- function(top_dir = "NewProject", project_type = "scR
       "02_src/02_quantification",
       "02_src/03_differential_expression",
       "03_qc",
-      "04_analysis/02_EDA",
+      "04_analysis/01_EDA",
       "04_analysis/02_DE_analysis",
       "05_figures",
       "06_slides",

@@ -2,19 +2,24 @@
 % Please edit documentation in R/PCscoreMat.R
 \name{PCscoreMat}
 \alias{PCscoreMat}
-\title{Title}
+\title{Compute a principal component score matrix for clusters}
 \usage{
 PCscoreMat(ExprMat, pure_markers)
 }
 \arguments{
-\item{pure_markers}{}
+\item{ExprMat}{A numeric matrix of gene expression values with genes as rows and samples as columns.}
+
+\item{pure_markers}{A data frame with columns `gene` and `cluster`, specifying marker genes for each cluster.}
 }
 \value{
-PC score matrix
+A matrix of scaled scores with clusters as rows and samples as columns.
+        Clusters with no matching genes in the expression matrix are excluded.
 }
 \description{
-Title
+This function calculates a score matrix for each cluster based on expression of marker genes.
+For each cluster, it extracts the relevant genes from the expression matrix and computes a score
+using the `gsScoreLegacy()` function. The scores are scaled and returned as a matrix.
 }
 \examples{
-PCscoreMat( )
+# PCscoreMat(expression_matrix, marker_df)
 }
