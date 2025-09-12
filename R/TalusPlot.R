@@ -1,9 +1,13 @@
-#' Title
+#' Talus plot for PCA standard deviation ratios
 #'
-#' @param PCAToolsObject
-#' @param cutoff
+#' Plots the log ratio of consecutive PCA standard deviations to help determine
+#' an elbow-like cutoff (a "talus" point) for significant PCs.
 #'
-#' @return The talus plot of a PCAtol pca object
+#' @param PCAToolsObject An object with a numeric vector `sdev` (standard deviations),
+#'   e.g., `prcomp` or similar structure containing `sdev`.
+#' @param cutoff Integer. Vertical line position to mark the suggested number of PCs.
+#'
+#' @return A ggplot object showing the talus plot with an optional vertical cutoff line.
 #' @export
 #'
 #' @examples TalusPlot()

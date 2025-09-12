@@ -1,10 +1,10 @@
-#' Prepares the annotations for plotting with CompleHeatmap
+#' Prepare top annotations for ComplexHeatmap
 #'
 #' @param DiscreteAnnotations
 #' @param DiscretePalettes
 #' @param ContinuousPalettes
 #' @param ContinuousAnnotations
-#' @return Complex Heatmap annotations
+#' @return A ComplexHeatmap::HeatmapAnnotation object suitable for use as top_annotation.
 #' @export
 #'
 #' @examples PrepareTopBar(DiscreteAnnotations,DiscretePalettes,ContinuousAnnotations=NULL,ContinuousPalettes=NULL)

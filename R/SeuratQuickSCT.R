@@ -7,6 +7,7 @@
 #' @param seu A Seurat object to be processed.
 #' @param ndims An integer specifying the number of dimensions to use for PCA and UMAP. Default is 30.
 #' @param npcs Number of principal components to be calculated.
+#' @param species Species for cell cycle scoring. One of "human" or "mouse". Default is "human".
 #'
 #' @return A processed Seurat object with normalized data, cell cycle scores, PCA, UMAP, and clusters.
 #' @export
@@ -16,13 +17,22 @@
 #'   # Assuming 'seurat_object' is your Seurat object
 #'   seurat_object <- SeuratQuickSCT(seurat_object, ndims = 30, npcs = 50)
 #' }
-SeuratQuickSCT <- function(seu, ndims = 30, npcs = 50) {
+SeuratQuickSCT <- function(seu, ndims = 30, npcs = 50, species = c("human", "mouse")) {
+  species <- match.arg(species)
   # Normalize data
   seu <- NormalizeData(seu, scale.factor = median(seu@meta.data$nCount_RNA))
   
   # Cell cycle scoring
-  s.genes <- cc.genes$s.genes %>% tolower() %>% firstup()
-  g2m.genes <- cc.genes$g2m.genes %>% tolower() %>% firstup()
+  if (species == "mouse") {
+    # Seurat's recommended approach for mouse is to title-case human CC genes
+    # https://satijalab.org/seurat/articles/cell_cycle_vignette.html
+    s.genes <- cc.genes$s.genes %>% tolower() %>% firstup()
+    g2m.genes <- cc.genes$g2m.genes %>% tolower() %>% firstup()
+  } else {
+    # For human, use the original human gene symbols
+    s.genes <- cc.genes$s.genes
+    g2m.genes <- cc.genes$g2m.genes
+  }
   seu <- CellCycleScoring(seu, s.features = s.genes, g2m.features = g2m.genes, set.ident = FALSE)
   
   # SCTransform
