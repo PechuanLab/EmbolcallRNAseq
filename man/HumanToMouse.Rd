@@ -2,19 +2,22 @@
 % Please edit documentation in R/HumanToMouse.R
 \name{HumanToMouse}
 \alias{HumanToMouse}
-\title{Title}
+\title{Convert human gene symbols to mouse gene symbols}
 \usage{
 HumanToMouse(x)
 }
 \arguments{
-\item{x}{}
+\item{x}{character() Vector of human HGNC gene symbols.}
 }
 \value{
-Gene vector
+character() Unique vector of mapped mouse MGI symbols.
 }
 \description{
-Title
+Maps a vector of human HGNC symbols to mouse MGI symbols using biomaRt and the
+Ensembl datasets for Homo sapiens and Mus musculus.
 }
 \examples{
-HumanToMouse( )
+\dontrun{
+  HumanToMouse(c("TNF", "IL6", "CD4"))
+}
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/ThetaProjectionScore.R
 \name{ThetaProjectionScore}
 \alias{ThetaProjectionScore}
-\title{Title}
+\title{Sweep theta values for projection score}
 \usage{
 ThetaProjectionScore(
   DataMatrix,
@@ -15,10 +15,10 @@ ThetaProjectionScore(
 \item{thetas}{}
 }
 \value{
-Fraction of variance for projection score bootstrapped average
+A data.frame with columns Thetas and ProjectionScores.
 }
 \description{
-Title
+Sweep theta values for projection score
 }
 \examples{
 ps.df = ThetaProjectionScore(DataMatrix,NPCs =  3, nboot = 100, thetas =c(0.005,0.01,0.02,0.05,0.08,0.1,0.12,0.15,0.17,0.18,0.2,0.23,0.25,0.3,0.5,0.75,1))

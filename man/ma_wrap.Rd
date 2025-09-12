@@ -2,19 +2,25 @@
 % Please edit documentation in R/ma_wrap.R
 \name{ma_wrap}
 \alias{ma_wrap}
-\title{Title}
+\title{Generate and save an MA plot for differential expression results}
 \usage{
 ma_wrap(signature, contrast, Prefix)
 }
 \arguments{
-\item{Prefix}{}
+\item{signature}{Data frame containing differential expression results. Must include columns: `AveExpr` (average expression), `logFC` (log2 fold change), `adj.P.Val` (adjusted p-value), and `symbol` (gene names).}
+
+\item{contrast}{Character string. Name of the contrast/condition, used in the output filename.}
+
+\item{Prefix}{Character string. Prefix for the output filename.}
 }
 \value{
-MA plot
+Invisibly returns NULL. The function is called for its side effect of saving a PNG MA plot to disk.
 }
 \description{
-Title
+This function creates an MA plot (log2 fold change vs. mean expression) from a differential expression signature table and saves it as a PNG file. It uses ggpubr::ggmaplot for visualization, highlights significant genes, and handles infinite/NA values.
 }
 \examples{
-ma_wrap( )
+\dontrun{
+  ma_wrap(signature, contrast = "Treatment_vs_Control", Prefix = "Experiment1_")
+}
 }

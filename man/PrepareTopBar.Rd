@@ -2,7 +2,7 @@
 % Please edit documentation in R/PrepareTopBar.R
 \name{PrepareTopBar}
 \alias{PrepareTopBar}
-\title{Prepares the annotations for plotting with CompleHeatmap}
+\title{Prepare top annotations for ComplexHeatmap}
 \usage{
 PrepareTopBar(
   DiscreteAnnotations,
@@ -12,10 +12,10 @@ PrepareTopBar(
 )
 }
 \value{
-Complex Heatmap annotations
+A ComplexHeatmap::HeatmapAnnotation object suitable for use as top_annotation.
 }
 \description{
-Prepares the annotations for plotting with CompleHeatmap
+Prepare top annotations for ComplexHeatmap
 }
 \examples{
 PrepareTopBar(DiscreteAnnotations,DiscretePalettes,ContinuousAnnotations=NULL,ContinuousPalettes=NULL)

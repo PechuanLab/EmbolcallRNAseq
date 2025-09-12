@@ -1,13 +1,19 @@
-#' Title
+
+#' Generate and save an MA plot for differential expression results
 #'
-#' @param signature
-#' @param contrast
-#' @param Prefix
+#' This function creates an MA plot (log2 fold change vs. mean expression) from a differential expression signature table and saves it as a PNG file. It uses ggpubr::ggmaplot for visualization, highlights significant genes, and handles infinite/NA values.
 #'
-#' @return MA plot
+#' @param signature Data frame containing differential expression results. Must include columns: `AveExpr` (average expression), `logFC` (log2 fold change), `adj.P.Val` (adjusted p-value), and `symbol` (gene names).
+#' @param contrast Character string. Name of the contrast/condition, used in the output filename.
+#' @param Prefix Character string. Prefix for the output filename.
+#'
+#' @return Invisibly returns NULL. The function is called for its side effect of saving a PNG MA plot to disk.
 #' @export
 #'
-#' @examples ma_wrap( )
+#' @examples
+#' \dontrun{
+#'   ma_wrap(signature, contrast = "Treatment_vs_Control", Prefix = "Experiment1_")
+#' }
 
 ma_wrap<-function(signature,contrast,Prefix){
   basemean = signature$AveExpr
