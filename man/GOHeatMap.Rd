@@ -2,7 +2,7 @@
 % Please edit documentation in R/GOheatmap.R
 \name{GOHeatMap}
 \alias{GOHeatMap}
-\title{Title}
+\title{Generate a GO term-annotated heatmap for gene expression clusters}
 \usage{
 GOHeatMap(
   scaled_mat,
@@ -22,14 +22,42 @@ GOHeatMap(
 )
 }
 \arguments{
-\item{showrownames}{}
+\item{scaled_mat}{Numeric matrix. Scaled gene expression matrix (genes × samples).}
+
+\item{Gomet}{Character. Enrichment method: "GO", "Wiki", "Kegg", or "Custom".}
+
+\item{nk_Go}{Integer. Number of gene clusters for enrichment analysis.}
+
+\item{organismRef}{Character. Organism name: "Mus musculus" or "Homo sapiens".}
+
+\item{nHL}{Integer. Number of genes to highlight per cluster. Default is 5.}
+
+\item{Csplit}{Integer or factor. Column split for ComplexHeatmap.}
+
+\item{gf}{Numeric. Font size for gene highlight labels. Default is 5.}
+
+\item{title}{Character. Title for the heatmap. Default is blank.}
+
+\item{clusCol}{Logical. Whether to cluster columns. Default is TRUE.}
+
+\item{top_annotation}{ComplexHeatmap annotation object. Additional top annotation for the heatmap.}
+
+\item{cust_db}{Data frame. Custom TERM2GENE mapping for enrichment if Gomet = "Custom". Default is NULL.}
+
+\item{hl}{Logical. Whether to highlight genes. Default is TRUE.}
+
+\item{showrownames}{Logical. Whether to show row (gene) names. Default is FALSE.}
+
+\item{showcolnames}{Logical. Whether to show column (sample) names. Default is FALSE.}
 }
 \value{
-GO Heatmap
+A ComplexHeatmap::Heatmap object with GO term row splits and gene highlights.
 }
 \description{
-Title
+This function creates a heatmap of a scaled gene expression matrix, clusters genes, annotates clusters with top GO terms, and highlights selected genes. It supports multiple enrichment methods and custom annotations.
 }
 \examples{
-GOHeatMap( )
+\dontrun{
+  GOHeatMap(scaled_mat, Gomet = "GO", nk_Go = 8, organismRef = "Mus musculus", nHL = 5, Csplit = 2, gf = 5, title = "Top Genes", clusCol = TRUE, top_annotation = NULL)
+}
 }

@@ -1,14 +1,20 @@
-#' Title
-#'
-#' @param Signature
-#' @param Pheno
-#' @param my_comparisons
-#' @param Factor
-#' @param Palette
-#' @return PC score plot
-#' @export
-#'
-#' @examples GeneScorePlot(Signature = pcSig, Pheno = yf$samples,  my_comparisons = list(c("TumorDay1","SkinDay8") ,c("TumorDay3","SkinDay8"),c("TumorDay8","SkinDay8"),c("PoreDay1","SkinDay8"),c("PoreDay3","SkinDay8"),c("PoreDay8","SkinDay8")))
+##' Plot gene signature scores by group with statistical comparisons
+##'
+##' Plots gene signature scores (e.g., PC scores) for groups in a phenotype data frame, with group comparisons.
+##'
+##' @param Signature Numeric vector. Gene signature scores for each sample.
+##' @param Pheno Data frame. Phenotype/sample metadata, one row per sample.
+##' @param my_comparisons List of character vectors. Each vector specifies two groups to compare.
+##' @param Factor Character. Column name in Pheno to use for grouping/coloring.
+##' @param Palette Character vector. Colors to use for groups.
+##'
+##' @return A ggplot object (boxplot with jitter and statistical comparisons).
+##' @export
+##'
+##' @examples
+##' \dontrun{
+##'   GeneScorePlot(Signature = pcSig, Pheno = yf$samples, my_comparisons = list(c("TumorDay1","SkinDay8")), Factor = "Treatment", Palette = c("red", "blue"))
+##' }
 
 GeneScorePlot <- function(Signature,Pheno,my_comparisons,Factor, Palette) {
   # Add to the phenotype information

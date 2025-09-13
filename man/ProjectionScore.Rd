@@ -2,20 +2,26 @@
 % Please edit documentation in R/ProjectionScore.R
 \name{ProjectionScore}
 \alias{ProjectionScore}
-\title{Title}
+\title{Compute projection score with bootstrapping}
 \usage{
 ProjectionScore(DataMatrix, NPCs = 3, nboot = 100)
 }
 \arguments{
-\item{nboot}{}
+\item{DataMatrix}{Matrix. Numeric data matrix (samples x features) to compute the projection score on.}
+
+\item{NPCs}{Integer. Number of principal components to use. Default is 3.}
+
+\item{nboot}{Integer. Number of bootstrap iterations. Default is 100.}
 }
 \value{
-Fraction of variance for projection score bootstrapped average
+Numeric. Fraction of variance for projection score bootstrapped average.
 }
 \description{
-Title
+Calculates the projection score as the difference between the explained variance (AlphaPE) and its bootstrapped average (BootAlpha) for a given data matrix. Useful for evaluating the stability of principal component projections.
 }
 \examples{
-ProjectionScore(DataMatrix)
-
+# Example with random data
+set.seed(123)
+mat <- matrix(rnorm(1000), nrow = 100, ncol = 10)
+ProjectionScore(mat, NPCs = 3, nboot = 50)
 }

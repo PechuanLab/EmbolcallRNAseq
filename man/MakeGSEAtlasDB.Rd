@@ -2,19 +2,25 @@
 % Please edit documentation in R/MakeGSEAalasDB.R
 \name{MakeGSEAtlasDB}
 \alias{MakeGSEAtlasDB}
-\title{Title}
+\title{Prepare marker annotation data frame for GSEA}
 \usage{
 MakeGSEAtlasDB(marker_df, p_val_adj = 0.05, avg_log2FC = 1)
 }
 \arguments{
-\item{avg_log2FC}{}
+\item{marker_df}{Data frame. Must contain columns for gene, cluster, p_val_adj, and avg_log2FC.}
+
+\item{p_val_adj}{Numeric. Adjusted p-value threshold for filtering. Default is 0.05.}
+
+\item{avg_log2FC}{Numeric. Absolute log2 fold change threshold for filtering. Default is 1.}
 }
 \value{
-Output annotation
+Data frame with marker info and Entrez IDs, suitable for GSEA input.
 }
 \description{
-Title
+Filters marker data frame by adjusted p-value and log2 fold change, adds Entrez IDs, and returns annotated data frame for GSEA.
 }
 \examples{
-MakeGSEAAtlasDB( )
+\dontrun{
+  MakeGSEAtlasDB(marker_df, p_val_adj = 0.05, avg_log2FC = 1)
+}
 }

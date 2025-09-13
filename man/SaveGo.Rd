@@ -2,19 +2,21 @@
 % Please edit documentation in R/go_functions.R
 \name{SaveGo}
 \alias{SaveGo}
-\title{Title}
+\title{Convert GO term list to tidy data frame}
 \usage{
 SaveGo(go_title)
 }
 \arguments{
-\item{go_title}{}
+\item{go_title}{List or vector of GO term assignments per gene.}
 }
 \value{
-GO term
+A data frame with columns Gene and GOTerm.
 }
 \description{
-Title
+Takes a list of GO term assignments and returns a tidy data frame with gene and GO term columns.
 }
 \examples{
-SaveGo( )
+\dontrun{
+  SaveGo(go_title)
+}
 }

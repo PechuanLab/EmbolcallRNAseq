@@ -2,19 +2,23 @@
 % Please edit documentation in R/NthMostVariable.R
 \name{NthMostVariableFeatures}
 \alias{NthMostVariableFeatures}
-\title{Title}
+\title{Select the n most variable features (genes)}
 \usage{
 NthMostVariableFeatures(mat, nvar)
 }
 \arguments{
-\item{nvar}{}
+\item{mat}{Numeric matrix. Rows are genes/features, columns are samples.}
+
+\item{nvar}{Integer. Number of most variable features to select.}
 }
 \value{
-Matrix
+A matrix containing only the n most variable rows (genes).
 }
 \description{
-Title
+Returns a matrix of the top n most variable rows (genes) from an expression matrix.
 }
 \examples{
-NthMostVariableFeatures( )
+\dontrun{
+  NthMostVariableFeatures(expr_matrix, nvar = 500)
+}
 }

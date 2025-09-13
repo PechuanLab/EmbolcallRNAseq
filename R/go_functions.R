@@ -1,12 +1,17 @@
-#' Title
-#'
-#' @param enrich_list
-#' @param filename
-#'
-#' @return Dowload files
-#' @export
-#'
-#' @examples go_enrich_save( )
+##' Save GO enrichment results to CSV
+##'
+##' Combines a list of GO enrichment results into a single data frame and writes it to a CSV file.
+##'
+##' @param enrich_list List of data frames, each containing GO enrichment results for a cluster.
+##' @param filename Character string. Prefix for the output CSV file.
+##'
+##' @return A data frame of combined enrichment results (invisible). Also writes a CSV file to disk.
+##' @export
+##'
+##' @examples
+##' \dontrun{
+##'   go_enrich_save(list_of_results, filename = "my_analysis")
+##' }
 go_enrich_save<-function(enrich_list, filename){
   #  e.g  go_enrich_save(enrich_list = eout$go_result)
   ## this function is to output csv file of GO enrichment result ####
@@ -19,16 +24,21 @@ go_enrich_save<-function(enrich_list, filename){
 }
 
 
-#' Title
-#'
-#' @param marker_lab
-#' @param enrich_list
-#' @param top_go_name
-#'
-#' @return GO sescription
-#' @export
-#'
-#' @examples add_go_heat( )
+##' Annotate clusters with top GO term
+##'
+##' For each cluster, assigns the top GO term description to the marker label vector.
+##'
+##' @param marker_lab Integer or character vector. Cluster assignments for each gene.
+##' @param enrich_list List of data frames, each containing GO enrichment results for a cluster.
+##' @param top_go_name Integer. Which GO term to use (row index in enrichment result). Default is 1.
+##'
+##' @return A vector of GO term descriptions, same length as marker_lab.
+##' @export
+##'
+##' @examples
+##' \dontrun{
+##'   add_go_heat(marker_lab, enrich_list, top_go_name = 1)
+##' }
 add_go_heat<-function(marker_lab,enrich_list,top_go_name=1){
   ## this function is used to produce stuff that will be used in Heatmap function ##
   ## for row split and row name. ####
@@ -45,14 +55,19 @@ add_go_heat<-function(marker_lab,enrich_list,top_go_name=1){
   return(g_in)
 }
 
-#' Title
-#'
-#' @param go_title
-#'
-#' @return GO term
-#' @export
-#'
-#' @examples SaveGo( )
+##' Convert GO term list to tidy data frame
+##'
+##' Takes a list of GO term assignments and returns a tidy data frame with gene and GO term columns.
+##'
+##' @param go_title List or vector of GO term assignments per gene.
+##'
+##' @return A data frame with columns Gene and GOTerm.
+##' @export
+##'
+##' @examples
+##' \dontrun{
+##'   SaveGo(go_title)
+##' }
 SaveGo <- function(go_title){
   # Saves Go terms
   tosaveGo = do.call(cbind.data.frame, as.list(go_title))
@@ -61,17 +76,22 @@ SaveGo <- function(go_title){
 }
 
 
-#' Title
-#'
-#' @param ngenes
-#' @param g_csv
-#' @param db
-#' @param Gomet
-#'
-#' @return Gene list
-#' @export
-#'
-#' @examples HLGenes( )
+##' Highlight top genes for annotation
+##'
+##' Selects top genes from GO enrichment results for annotation in heatmaps, optionally converting IDs.
+##'
+##' @param ngenes Integer. Number of top genes to select per cluster. Default is 5.
+##' @param g_csv Data frame. Combined GO enrichment results (from go_enrich_save).
+##' @param db OrgDb object. Organism database for ID conversion.
+##' @param Gomet Character. Enrichment method ("Wiki", "Kegg", "Custom").
+##'
+##' @return Integer vector of row indices for selected genes in the scaled matrix.
+##' @export
+##'
+##' @examples
+##' \dontrun{
+##'   HLGenes(ngenes = 5, g_csv, db, Gomet = "Wiki")
+##' }
 HLGenes <-function(ngenes=5,g_csv,db,Gomet){
   # Highlights genes randomly
   geneses = paste0("gene",1:ngenes)
@@ -90,14 +110,19 @@ HLGenes <-function(ngenes=5,g_csv,db,Gomet){
 
 
 
-#' Title
-#'
-#' @param gsea_result
-#'
-#' @return GSEA Description
-#' @export
-#'
-#' @examples CleanName( )
+##' Clean GSEA result names for readability
+##'
+##' Removes prefixes and underscores from GSEA result names, IDs, and descriptions for easier plotting.
+##'
+##' @param gsea_result GSEA result object (from clusterProfiler or similar).
+##'
+##' @return The modified GSEA result object with cleaned names and descriptions.
+##' @export
+##'
+##' @examples
+##' \dontrun{
+##'   CleanName(gsea_result)
+##' }
 CleanName <- function(gsea_result) {
   # Clean GSEA name
   names(gsea_result@geneSets) = str_replace_all(str_remove(names(gsea_result@geneSets),"HALLMARK_"),"_"," ")

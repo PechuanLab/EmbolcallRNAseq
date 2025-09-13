@@ -2,7 +2,7 @@
 % Please edit documentation in R/PrepareTopBar.R
 \name{PrepareTopBar}
 \alias{PrepareTopBar}
-\title{Prepare top annotations for ComplexHeatmap}
+\title{Prepare top bar annotation for ComplexHeatmap}
 \usage{
 PrepareTopBar(
   DiscreteAnnotations,
@@ -11,12 +11,23 @@ PrepareTopBar(
   ContinuousPalettes = NULL
 )
 }
+\arguments{
+\item{DiscreteAnnotations}{Data frame. Discrete (categorical) sample annotations (columns = annotation types, rows = samples).}
+
+\item{DiscretePalettes}{List. Named list of color vectors for each discrete annotation.}
+
+\item{ContinuousAnnotations}{Data frame or NULL. Continuous (numeric) sample annotations. Default is NULL.}
+
+\item{ContinuousPalettes}{List or NULL. Named list of color functions for each continuous annotation. Default is NULL.}
+}
 \value{
-A ComplexHeatmap::HeatmapAnnotation object suitable for use as top_annotation.
+A ComplexHeatmap::HeatmapAnnotation object suitable for use as the `top_annotation` argument in ComplexHeatmap.
 }
 \description{
-Prepare top annotations for ComplexHeatmap
+This function creates a ComplexHeatmap top annotation object from discrete and continuous sample annotations and their color palettes.
 }
 \examples{
-PrepareTopBar(DiscreteAnnotations,DiscretePalettes,ContinuousAnnotations=NULL,ContinuousPalettes=NULL)
+\dontrun{
+  PrepareTopBar(DiscreteAnnotations, DiscretePalettes, ContinuousAnnotations = NULL, ContinuousPalettes = NULL)
+}
 }

@@ -2,19 +2,25 @@
 % Please edit documentation in R/go_functions.R
 \name{add_go_heat}
 \alias{add_go_heat}
-\title{Title}
+\title{Annotate clusters with top GO term}
 \usage{
 add_go_heat(marker_lab, enrich_list, top_go_name = 1)
 }
 \arguments{
-\item{top_go_name}{}
+\item{marker_lab}{Integer or character vector. Cluster assignments for each gene.}
+
+\item{enrich_list}{List of data frames, each containing GO enrichment results for a cluster.}
+
+\item{top_go_name}{Integer. Which GO term to use (row index in enrichment result). Default is 1.}
 }
 \value{
-GO sescription
+A vector of GO term descriptions, same length as marker_lab.
 }
 \description{
-Title
+For each cluster, assigns the top GO term description to the marker label vector.
 }
 \examples{
-add_go_heat( )
+\dontrun{
+  add_go_heat(marker_lab, enrich_list, top_go_name = 1)
+}
 }

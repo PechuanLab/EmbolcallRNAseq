@@ -1,15 +1,21 @@
-#' Title
-#'
-#' @param Signature
-#' @param Pheno
-#' @param my_comparisons
-#' @param Factor
-#' @param Palette
-#' @param Compartment
-#' @return PC score plot
-#' @export
-#'
-#' @examples GeneScorePlot(Signature = pcSig, Pheno = yf$samples,  my_comparisons = list(c("TumorDay1","SkinDay8") ,c("TumorDay3","SkinDay8"),c("TumorDay8","SkinDay8"),c("PoreDay1","SkinDay8"),c("PoreDay3","SkinDay8"),c("PoreDay8","SkinDay8")))
+
+##' Plot STAMP deconvolution signature scores by compartment
+##'
+##' Generates a boxplot of STAMP atlas signature scores for different cell types within a specified compartment, using principal component scores and phenotype information. Useful for visualizing deconvolution results across experimental groups.
+##'
+##' @param ExprMat Matrix. Expression matrix (genes x samples) for deconvolution.
+##' @param Pheno Data frame. Phenotype/sample metadata to merge with scores.
+##' @param my_comparisons List. List of group comparisons for plotting (not directly used in function, but included for compatibility).
+##' @param Factor Character. Column name in `Pheno` to use for coloring groups.
+##' @param Palette Character vector. Colors to use for group levels in the plot.
+##' @param Compartment Character. Compartment to subset cell types for plotting (e.g., "Lymphoid", "Stroma", "Myeloid", "Other").
+##'
+##' @return A ggplot2 object: boxplot of STAMP atlas signature scores by cell type and group.
+##' @export
+##'
+##' @examples
+##' # Example usage (requires proper input objects):
+##' # STAMPDeconvolPlot(ExprMat, Pheno, my_comparisons, Factor = "Group", Palette = c("red", "blue"), Compartment = "Lymphoid")
 
 STAMPDeconvolPlot <- function(ExprMat,Pheno,my_comparisons,Factor, Palette, Compartment) {
   # Add to the phenotype information

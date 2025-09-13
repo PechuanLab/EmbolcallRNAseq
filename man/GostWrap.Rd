@@ -2,19 +2,23 @@
 % Please edit documentation in R/GostWrap.R
 \name{GostWrap}
 \alias{GostWrap}
-\title{Wrapper for gostplot}
+\title{Run and plot GO/Pathway enrichment with gprofiler2::gost}
 \usage{
 GostWrap(signature, species = "mmusculus")
 }
 \arguments{
-\item{species}{}
+\item{signature}{Data frame. Differential expression results with rownames as gene symbols and columns including `logFC` and `adj.P.Val`.}
+
+\item{species}{Character. Organism code for gprofiler2 (e.g., "mmusculus" for mouse, "hsapiens" for human). Default is "mmusculus".}
 }
 \value{
-Wrapper for gostplot
+Invisibly returns NULL. Side effects: saves a PDF plot ("GOstPlot.pdf") and an RDS file ("GOstPlot_results.rds").
 }
 \description{
-Wrapper for gostplot
+This function filters a differential expression signature for significant genes, runs gprofiler2::gost for pathway enrichment, plots the top pathways, and saves both the plot and results.
 }
 \examples{
-GostWrap()
+\dontrun{
+  GostWrap(signature, species = "mmusculus")
+}
 }

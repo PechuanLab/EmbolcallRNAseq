@@ -2,20 +2,25 @@
 % Please edit documentation in R/FilterLowlyExpressed.R
 \name{FilterLowlyExpressed}
 \alias{FilterLowlyExpressed}
-\title{Title}
+\title{Filter lowly expressed genes from DGEList}
 \usage{
 FilterLowlyExpressed(y.all, nsamples = 3, nreads = 15)
 }
 \arguments{
-\item{nsamples}{}
+\item{y.all}{edgeR DGEList object containing counts and sample info.}
+
+\item{nsamples}{Integer. Minimum number of samples in which a gene must be expressed above threshold. Default is 3.}
+
+\item{nreads}{Integer. Minimum read count threshold for CPM calculation. Default is 15.}
 }
 \value{
-Projection Score Plot
+A filtered DGEList object with lowly expressed genes removed.
 }
 \description{
-Title
+Removes genes with low counts per million (CPM) across samples from an edgeR DGEList object.
 }
 \examples{
-FilterLowlyExpressed(y.all,nsamples = 3)
-
+\dontrun{
+  FilterLowlyExpressed(y.all, nsamples = 3, nreads = 15)
+}
 }

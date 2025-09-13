@@ -2,19 +2,23 @@
 % Please edit documentation in R/go_functions.R
 \name{go_enrich_save}
 \alias{go_enrich_save}
-\title{Title}
+\title{Save GO enrichment results to CSV}
 \usage{
 go_enrich_save(enrich_list, filename)
 }
 \arguments{
-\item{filename}{}
+\item{enrich_list}{List of data frames, each containing GO enrichment results for a cluster.}
+
+\item{filename}{Character string. Prefix for the output CSV file.}
 }
 \value{
-Dowload files
+A data frame of combined enrichment results (invisible). Also writes a CSV file to disk.
 }
 \description{
-Title
+Combines a list of GO enrichment results into a single data frame and writes it to a CSV file.
 }
 \examples{
-go_enrich_save( )
+\dontrun{
+  go_enrich_save(list_of_results, filename = "my_analysis")
+}
 }

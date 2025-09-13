@@ -2,19 +2,27 @@
 % Please edit documentation in R/go_functions.R
 \name{HLGenes}
 \alias{HLGenes}
-\title{Title}
+\title{Highlight top genes for annotation}
 \usage{
 HLGenes(ngenes = 5, g_csv, db, Gomet)
 }
 \arguments{
-\item{Gomet}{}
+\item{ngenes}{Integer. Number of top genes to select per cluster. Default is 5.}
+
+\item{g_csv}{Data frame. Combined GO enrichment results (from go_enrich_save).}
+
+\item{db}{OrgDb object. Organism database for ID conversion.}
+
+\item{Gomet}{Character. Enrichment method ("Wiki", "Kegg", "Custom").}
 }
 \value{
-Gene list
+Integer vector of row indices for selected genes in the scaled matrix.
 }
 \description{
-Title
+Selects top genes from GO enrichment results for annotation in heatmaps, optionally converting IDs.
 }
 \examples{
-HLGenes( )
+\dontrun{
+  HLGenes(ngenes = 5, g_csv, db, Gomet = "Wiki")
+}
 }

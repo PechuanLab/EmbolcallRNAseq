@@ -2,16 +2,21 @@
 % Please edit documentation in R/PrepareFindMarkers.R
 \name{PrepareFindMarkers}
 \alias{PrepareFindMarkers}
-\title{Title}
+\title{Format Seurat FindMarkers output for Embolcall}
 \usage{
 PrepareFindMarkers(FindMarkersResult)
 }
+\arguments{
+\item{FindMarkersResult}{Data frame. Output from Seurat's FindMarkers or FindAllMarkers function.}
+}
 \value{
-Seurat to Embolcall
+Data frame with columns renamed to `logFC`, `adj.P.Val`, and a new `symbol` column with gene names.
 }
 \description{
-Title
+Renames columns and adds a gene symbol column to a Seurat FindMarkers result for downstream compatibility.
 }
 \examples{
-PrepareFindMarkers()
+\dontrun{
+  formatted <- PrepareFindMarkers(FindMarkersResult)
+}
 }

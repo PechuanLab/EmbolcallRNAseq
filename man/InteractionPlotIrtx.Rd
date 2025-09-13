@@ -2,19 +2,29 @@
 % Please edit documentation in R/InteractionPlotIrtx.R
 \name{InteractionPlotIrtx}
 \alias{InteractionPlotIrtx}
-\title{Title}
+\title{Plot gene expression interaction over time and group}
 \usage{
 InteractionPlotIrtx(gensmbl, x.factor, trace.factor, ExprMat, cpalette)
 }
 \arguments{
-\item{cpalette}{}
+\item{gensmbl}{Character. Gene symbol to plot.}
+
+\item{x.factor}{Numeric or factor. Time or x-axis variable for the plot.}
+
+\item{trace.factor}{Factor. Grouping variable (e.g., clone or condition).}
+
+\item{ExprMat}{Numeric matrix. Expression matrix with genes as rows and samples as columns.}
+
+\item{cpalette}{Character vector. Colors for each group/clone.}
 }
 \value{
-save ggplot
+Invisibly returns NULL. Side effect: saves a PDF plot named "<gene>_Interaction.pdf".
 }
 \description{
-Title
+This function creates an interaction plot for a single gene, showing its expression over time and across groups (clones), with error bars and group-specific normalization. The plot is saved as a PDF.
 }
 \examples{
-InteractionPlotIrtx( )
+\dontrun{
+  InteractionPlotIrtx("GeneA", x.factor = time, trace.factor = group, ExprMat = exprs, cpalette = c("red", "blue"))
+}
 }

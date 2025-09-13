@@ -2,19 +2,25 @@
 % Please edit documentation in R/GSEAprepare.R
 \name{GSEAPrepare}
 \alias{GSEAPrepare}
-\title{Title}
+\title{Prepare ranked gene list for GSEA}
 \usage{
 GSEAPrepare(signature, Foldstatistic = "logFC", species)
 }
 \arguments{
-\item{species}{}
+\item{signature}{Data frame. Must contain columns for gene symbols, log fold change, and adjusted p-value.}
+
+\item{Foldstatistic}{Character. Name of the column to use as ranking statistic (default: "logFC").}
+
+\item{species}{Character. Organism name ("Mus musculus" or "Homo sapiens").}
 }
 \value{
-Gene vector
+Named numeric vector of ranking statistics, names are Entrez gene IDs.
 }
 \description{
-Title
+Converts a differential expression signature table into a named numeric vector for GSEA, mapping gene symbols to Entrez IDs.
 }
 \examples{
-GSEAPrepare( )
+\dontrun{
+  stats <- GSEAPrepare(signature, Foldstatistic = "logFC", species = "Mus musculus")
+}
 }

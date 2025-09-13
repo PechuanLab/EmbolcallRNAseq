@@ -2,19 +2,21 @@
 % Please edit documentation in R/go_functions.R
 \name{CleanName}
 \alias{CleanName}
-\title{Title}
+\title{Clean GSEA result names for readability}
 \usage{
 CleanName(gsea_result)
 }
 \arguments{
-\item{gsea_result}{}
+\item{gsea_result}{GSEA result object (from clusterProfiler or similar).}
 }
 \value{
-GSEA Description
+The modified GSEA result object with cleaned names and descriptions.
 }
 \description{
-Title
+Removes prefixes and underscores from GSEA result names, IDs, and descriptions for easier plotting.
 }
 \examples{
-CleanName( )
+\dontrun{
+  CleanName(gsea_result)
+}
 }

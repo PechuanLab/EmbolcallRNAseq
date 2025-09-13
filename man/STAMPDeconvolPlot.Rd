@@ -2,16 +2,30 @@
 % Please edit documentation in R/STAMPDeconvolPlot.R
 \name{STAMPDeconvolPlot}
 \alias{STAMPDeconvolPlot}
-\title{Title}
+\title{Plot STAMP deconvolution signature scores by compartment}
 \usage{
 STAMPDeconvolPlot(ExprMat, Pheno, my_comparisons, Factor, Palette, Compartment)
 }
+\arguments{
+\item{ExprMat}{Matrix. Expression matrix (genes x samples) for deconvolution.}
+
+\item{Pheno}{Data frame. Phenotype/sample metadata to merge with scores.}
+
+\item{my_comparisons}{List. List of group comparisons for plotting (not directly used in function, but included for compatibility).}
+
+\item{Factor}{Character. Column name in `Pheno` to use for coloring groups.}
+
+\item{Palette}{Character vector. Colors to use for group levels in the plot.}
+
+\item{Compartment}{Character. Compartment to subset cell types for plotting (e.g., "Lymphoid", "Stroma", "Myeloid", "Other").}
+}
 \value{
-PC score plot
+A ggplot2 object: boxplot of STAMP atlas signature scores by cell type and group.
 }
 \description{
-Title
+Generates a boxplot of STAMP atlas signature scores for different cell types within a specified compartment, using principal component scores and phenotype information. Useful for visualizing deconvolution results across experimental groups.
 }
 \examples{
-GeneScorePlot(Signature = pcSig, Pheno = yf$samples,  my_comparisons = list(c("TumorDay1","SkinDay8") ,c("TumorDay3","SkinDay8"),c("TumorDay8","SkinDay8"),c("PoreDay1","SkinDay8"),c("PoreDay3","SkinDay8"),c("PoreDay8","SkinDay8")))
+# Example usage (requires proper input objects):
+# STAMPDeconvolPlot(ExprMat, Pheno, my_comparisons, Factor = "Group", Palette = c("red", "blue"), Compartment = "Lymphoid")
 }

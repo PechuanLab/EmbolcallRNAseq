@@ -2,19 +2,21 @@
 % Please edit documentation in R/FeatureToSymbol.R
 \name{FeaturesToSymbol}
 \alias{FeaturesToSymbol}
-\title{Title}
+\title{Update feature names in ExpressionSet to gene symbols}
 \usage{
 FeaturesToSymbol(es.all)
 }
 \arguments{
-\item{es.all}{}
+\item{es.all}{An ExpressionSet or SummarizedExperiment object with featureData containing a "symbol" column.}
 }
 \value{
-Gene names
+The input object with updated row names (gene symbols).
 }
 \description{
-Title
+Replaces row names in an ExpressionSet object with gene symbols from its featureData.
 }
 \examples{
-FeaturesToSymbol()
+\dontrun{
+  FeaturesToSymbol(eset)
+}
 }

@@ -2,16 +2,25 @@
 % Please edit documentation in R/GseaPCA.R
 \name{GseaPCA}
 \alias{GseaPCA}
-\title{Title}
+\title{Run GSEA on principal components from PCA results}
 \usage{
 GseaPCA(PCAToolsObject, npcs = 3, species)
 }
+\arguments{
+\item{PCAToolsObject}{List or S3 object. Must contain a `loadings` matrix (genes × PCs) from PCA.}
+
+\item{npcs}{Integer. Number of principal components to analyze. Default is 3.}
+
+\item{species}{Character. Organism name (e.g., "Mus musculus", "Homo sapiens").}
+}
 \value{
-GSEA database
+Invisibly returns NULL. Side effects: generates GSEA plots and tables for each PC.
 }
 \description{
-Title
+For each of the top principal components, this function prepares a ranked gene list from the loadings, runs GSEA, and generates enrichment plots and tables.
 }
 \examples{
- GseaPCA( )
+\dontrun{
+  GseaPCA(PCAToolsObject, npcs = 3, species = "Mus musculus")
+}
 }

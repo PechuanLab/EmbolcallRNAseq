@@ -2,16 +2,29 @@
 % Please edit documentation in R/GeneScorePlot.R
 \name{GeneScorePlot}
 \alias{GeneScorePlot}
-\title{Title}
+\title{Plot gene signature scores by group with statistical comparisons}
 \usage{
 GeneScorePlot(Signature, Pheno, my_comparisons, Factor, Palette)
 }
+\arguments{
+\item{Signature}{Numeric vector. Gene signature scores for each sample.}
+
+\item{Pheno}{Data frame. Phenotype/sample metadata, one row per sample.}
+
+\item{my_comparisons}{List of character vectors. Each vector specifies two groups to compare.}
+
+\item{Factor}{Character. Column name in Pheno to use for grouping/coloring.}
+
+\item{Palette}{Character vector. Colors to use for groups.}
+}
 \value{
-PC score plot
+A ggplot object (boxplot with jitter and statistical comparisons).
 }
 \description{
-Title
+Plots gene signature scores (e.g., PC scores) for groups in a phenotype data frame, with group comparisons.
 }
 \examples{
-GeneScorePlot(Signature = pcSig, Pheno = yf$samples,  my_comparisons = list(c("TumorDay1","SkinDay8") ,c("TumorDay3","SkinDay8"),c("TumorDay8","SkinDay8"),c("PoreDay1","SkinDay8"),c("PoreDay3","SkinDay8"),c("PoreDay8","SkinDay8")))
+\dontrun{
+  GeneScorePlot(Signature = pcSig, Pheno = yf$samples, my_comparisons = list(c("TumorDay1","SkinDay8")), Factor = "Treatment", Palette = c("red", "blue"))
+}
 }

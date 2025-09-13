@@ -2,20 +2,23 @@
 % Please edit documentation in R/SeuratFindTopMarkers.R
 \name{SeuratFindTopMarkers}
 \alias{SeuratFindTopMarkers}
-\title{Process Seurat Object and Find Top Markers}
+\title{Find top markers for each cluster in a Seurat object}
 \usage{
 SeuratFindTopMarkers(seu)
 }
+\arguments{
+\item{seu}{Seurat object. The Seurat object to process and analyze.}
+}
 \value{
-A data frame of top markers for each cluster.
+Data frame. Top marker genes for each cluster, including statistics such as log fold change and adjusted p-value.
 }
 \description{
-This function processes a Seurat object by normalizing and scaling the data, 
-and then finds the top markers for each cluster.
+Processes a Seurat object by normalizing and scaling the data, then identifies the top marker genes for each cluster using FindAllMarkers. Returns a data frame of the top markers per cluster, filtered by adjusted p-value and sorted by log fold change.
 }
 \examples{
 \dontrun{
   # Assuming 'seu' is your Seurat object
   top_markers <- SeuratFindTopMarkers(seu)
+  head(top_markers)
 }
 }
