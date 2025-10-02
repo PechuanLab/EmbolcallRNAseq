@@ -7,24 +7,30 @@
 GeneScorePlot(Signature, Pheno, my_comparisons, Factor, Palette)
 }
 \arguments{
-\item{Signature}{Numeric vector. Gene signature scores for each sample.}
+\item{Signature}{Numeric vector. Gene signature scores for each sample (length must match number of rows in \code{Pheno}).}
 
 \item{Pheno}{Data frame. Phenotype/sample metadata, one row per sample.}
 
-\item{my_comparisons}{List of character vectors. Each vector specifies two groups to compare.}
+\item{my_comparisons}{List of character vectors. Each vector specifies two group names (as in \code{Factor}) to compare.}
 
-\item{Factor}{Character. Column name in Pheno to use for grouping/coloring.}
+\item{Factor}{Character. Column name in \code{Pheno} to use for grouping and coloring.}
 
-\item{Palette}{Character vector. Colors to use for groups.}
+\item{Palette}{Character vector. Colors to use for each group in the plot.}
 }
 \value{
 A ggplot object (boxplot with jitter and statistical comparisons).
 }
 \description{
-Plots gene signature scores (e.g., PC scores) for groups in a phenotype data frame, with group comparisons.
+This function creates a boxplot (with jitter) of gene signature scores (e.g., PC scores) grouped by a specified phenotype variable, and adds statistical comparisons between specified groups.
 }
 \examples{
 \dontrun{
-  GeneScorePlot(Signature = pcSig, Pheno = yf$samples, my_comparisons = list(c("TumorDay1","SkinDay8")), Factor = "Treatment", Palette = c("red", "blue"))
+  GeneScorePlot(
+    Signature = pcSig,
+    Pheno = yf$samples,
+    my_comparisons = list(c("TumorDay1", "SkinDay8")),
+    Factor = "Treatment",
+    Palette = c("red", "blue")
+  )
 }
 }

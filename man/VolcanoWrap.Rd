@@ -2,26 +2,27 @@
 % Please edit documentation in R/VolcanoWrap.R
 \name{VolcanoWrap}
 \alias{VolcanoWrap}
-\title{Wrapps EnhancedVolcanoPlot}
+\title{Wrapper for EnhancedVolcano Plot}
 \usage{
 VolcanoWrap(signature, Prefix, contraste, listofgenes = NULL)
 }
 \arguments{
-\item{signature}{DE result.}
+\item{signature}{Data frame. Differential expression results, must contain columns \code{logFC}, \code{adj.P.Val}, and \code{symbol}.}
 
-\item{Prefix}{String to append to title.}
+\item{Prefix}{Character. String to prepend to the output file name.}
 
-\item{contraste}{Title of the plot.}
+\item{contraste}{Character. Title of the plot and part of the output file name.}
 
-\item{listofgenes}{List of genes to highlight.}
+\item{listofgenes}{Character vector or NULL. List of gene symbols to highlight on the plot (optional).}
 }
 \value{
-Volcano plot
+Invisibly returns NULL. Side effect: saves a PNG file with the volcano plot.
 }
 \description{
-Wrapps EnhancedVolcanoPlot
+This function creates and saves a volcano plot using the EnhancedVolcano package, based on differential expression results.
 }
 \examples{
-VolcanoWrap(signature,Prefix,contraste,listofgenes = NULL)
-
+\dontrun{
+  VolcanoWrap(signature, Prefix = "Exp1_", contraste = "Tumor_vs_Normal", listofgenes = c("GeneA", "GeneB"))
+}
 }
