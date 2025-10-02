@@ -1,0 +1,40 @@
+#' Get Cell Type Signature Genes or Subsignature
+#'
+#' Returns the full signature list for a cell type group (e.g., "TCells", "Fibroblasts") or a specific subsignature vector if prompted (e.g., "Effector", "Myo").
+#'
+#' @param signature_name Character. The name of the group ("TCells", "Fibroblasts") or the subsignature (e.g., "Effector", "Myo").
+#' @return If a group name is provided, returns the full signature list for that group. If a subsignature name is provided, returns the character vector of gene symbols. Returns NULL if not found.
+#' @examples
+#' scSignatures("TCells")         # returns the TCells list
+#' scSignatures("Fibroblasts")    # returns the Fibroblasts list
+#' scSignatures("Effector")       # returns the Effector signature vector
+#' scSignatures("Myo")            # returns the Myo signature vector
+#' scSignatures("Unknown")        # returns NULL
+#' @export
+scSignatures <- function(signature_name) {
+  TCells <- list(
+    Exhaustion = c("Pdcd1","Tigit","Tox","Lag3","Entpd1","Tnfrsf9","Havcr2","Ctla4"),
+    Effector= c("Gzma","Gzmb","Gzmk","Prf1","Nkg7","Ifng","Tnf"), # nolint
+    Coestimulatory= c("Tnfrsf9","Icos","Cd28"),
+    NaiveMemory= c("Il7r","Tcf7","Sell","Ccr7","Lef1"),
+    Th1 = c("Tbx21","Il12rb1","Il12rb2","Stat4"),
+    Th2 = c("Gata3","Stat6","Il4ra")
+    # From: van de Leun et al. 2020
+  )
+  Fibroblasts <- list(
+    Advential = c("Pi16","Dpt"),
+    Chemo = c("Cxcl5","Rarres2"),
+    Myo = c("Cthrc1","Acta2")
+  )
+  if (tolower(signature_name) == "tcells") {
+    return(TCells)
+  } else if (tolower(signature_name) == "fibroblasts") {
+    return(Fibroblasts)
+  } else if (signature_name %in% names(TCells)) {
+    return(TCells[[signature_name]])
+  } else if (signature_name %in% names(Fibroblasts)) {
+    return(Fibroblasts[[signature_name]])
+  } else {
+    return(NULL)
+  }
+}

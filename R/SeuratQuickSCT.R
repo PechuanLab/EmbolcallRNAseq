@@ -37,7 +37,8 @@ SeuratQuickSCT <- function(seu, ndims = 30, npcs = 50, species = c("human", "mou
   
   # SCTransform
   seu <- SCTransform(seu, verbose = TRUE, conserve.memory = TRUE, 
-                     vars.to.regress = c("S.Score", "G2M.Score", "percent_ribo", "percent_mito"))
+                     vars.to.regress = c("S.Score", "G2M.Score",
+                                         "percent_ribo", "percent_mito"))
   
   # Run PCA
   seu <- RunPCA(seu, npcs = npcs)
