@@ -31,4 +31,5 @@ Calculates projection scores for a range of theta values, where theta determines
 set.seed(123)
 mat <- matrix(rnorm(1000), nrow = 100, ncol = 10)
 ps.df <- ThetaProjectionScore(mat, NPCs = 3, nboot = 50, thetas = c(0.1, 0.25, 0.5, 1))
+
 }

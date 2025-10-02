@@ -7,10 +7,10 @@
 HumanToMouse(x)
 }
 \arguments{
-\item{x}{character() Vector of human HGNC gene symbols.}
+\item{x}{Character vector. Human HGNC gene symbols to convert.}
 }
 \value{
-character() Unique vector of mapped mouse MGI symbols.
+Character vector. Unique mapped mouse MGI gene symbols.
 }
 \description{
 Maps a vector of human HGNC symbols to mouse MGI symbols using biomaRt and the

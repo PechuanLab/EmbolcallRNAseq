@@ -1,22 +1,18 @@
-
-
-
-##' Convert human gene symbols to mouse gene symbols
-##'
-##' Maps a vector of human HGNC symbols to mouse MGI symbols using biomaRt and the
-##' Ensembl datasets for Homo sapiens and Mus musculus.
-##'
-##' @param x character() Vector of human HGNC gene symbols.
-##'
-##' @return character() Unique vector of mapped mouse MGI symbols.
-##' @export
-##'
-##' @examples
-##' \dontrun{
-##'   HumanToMouse(c("TNF", "IL6", "CD4"))
-##' }
+#' Convert human gene symbols to mouse gene symbols
+#'
+#' Maps a vector of human HGNC symbols to mouse MGI symbols using biomaRt and the
+#' Ensembl datasets for Homo sapiens and Mus musculus.
+#'
+#' @param x Character vector. Human HGNC gene symbols to convert.
+#'
+#' @return Character vector. Unique mapped mouse MGI gene symbols.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'   HumanToMouse(c("TNF", "IL6", "CD4"))
+#' }
 HumanToMouse <- function(x){
-
   human = biomaRt::useMart("ensembl", dataset = "hsapiens_gene_ensembl")
   mouse = biomaRt::useMart("ensembl", dataset = "mmusculus_gene_ensembl")
 

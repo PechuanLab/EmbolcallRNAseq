@@ -1,30 +1,29 @@
-
-##' Generate a GO term-annotated heatmap for gene expression clusters
-##'
-##' This function creates a heatmap of a scaled gene expression matrix, clusters genes, annotates clusters with top GO terms, and highlights selected genes. It supports multiple enrichment methods and custom annotations.
-##'
-##' @param scaled_mat Numeric matrix. Scaled gene expression matrix (genes × samples).
-##' @param Gomet Character. Enrichment method: "GO", "Wiki", "Kegg", or "Custom".
-##' @param nk_Go Integer. Number of gene clusters for enrichment analysis.
-##' @param organismRef Character. Organism name: "Mus musculus" or "Homo sapiens".
-##' @param nHL Integer. Number of genes to highlight per cluster. Default is 5.
-##' @param Csplit Integer or factor. Column split for ComplexHeatmap.
-##' @param gf Numeric. Font size for gene highlight labels. Default is 5.
-##' @param title Character. Title for the heatmap. Default is blank.
-##' @param clusCol Logical. Whether to cluster columns. Default is TRUE.
-##' @param top_annotation ComplexHeatmap annotation object. Additional top annotation for the heatmap.
-##' @param cust_db Data frame. Custom TERM2GENE mapping for enrichment if Gomet = "Custom". Default is NULL.
-##' @param hl Logical. Whether to highlight genes. Default is TRUE.
-##' @param showrownames Logical. Whether to show row (gene) names. Default is FALSE.
-##' @param showcolnames Logical. Whether to show column (sample) names. Default is FALSE.
-##'
-##' @return A ComplexHeatmap::Heatmap object with GO term row splits and gene highlights.
-##' @export
-##'
-##' @examples
-##' \dontrun{
-##'   GOHeatMap(scaled_mat, Gomet = "GO", nk_Go = 8, organismRef = "Mus musculus", nHL = 5, Csplit = 2, gf = 5, title = "Top Genes", clusCol = TRUE, top_annotation = NULL)
-##' }
+#' Generate a GO term-annotated heatmap for gene expression clusters
+#'
+#' This function creates a heatmap of a scaled gene expression matrix, clusters genes, annotates clusters with top GO terms, and highlights selected genes. It supports multiple enrichment methods and custom annotations.
+#'
+#' @param scaled_mat Numeric matrix. Scaled gene expression matrix (genes × samples).
+#' @param Gomet Character. Enrichment method: "GO", "Wiki", "Kegg", or "Custom".
+#' @param nk_Go Integer. Number of gene clusters for enrichment analysis.
+#' @param organismRef Character. Organism name: "Mus musculus" or "Homo sapiens".
+#' @param nHL Integer. Number of genes to highlight per cluster. Default is 5.
+#' @param Csplit Integer or factor. Column split for ComplexHeatmap.
+#' @param gf Numeric. Font size for gene highlight labels. Default is 5.
+#' @param title Character. Title for the heatmap. Default is blank.
+#' @param clusCol Logical. Whether to cluster columns. Default is TRUE.
+#' @param top_annotation ComplexHeatmap annotation object. Additional top annotation for the heatmap.
+#' @param cust_db Data frame. Custom TERM2GENE mapping for enrichment if Gomet = "Custom". Default is NULL.
+#' @param hl Logical. Whether to highlight genes. Default is TRUE.
+#' @param showrownames Logical. Whether to show row (gene) names. Default is FALSE.
+#' @param showcolnames Logical. Whether to show column (sample) names. Default is FALSE.
+#'
+#' @return A ComplexHeatmap::Heatmap object with GO term row splits and gene highlights.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'   GOHeatMap(scaled_mat, Gomet = "GO", nk_Go = 8, organismRef = "Mus musculus", nHL = 5, Csplit = 2, gf = 5, title = "Top Genes", clusCol = TRUE, top_annotation = NULL)
+#' }
 
 GOHeatMap <- function(scaled_mat,Gomet,nk_Go,organismRef,
                       nHL=5,Csplit,gf = 5,title = "  ",

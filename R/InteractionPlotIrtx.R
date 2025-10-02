@@ -1,21 +1,20 @@
-
-##' Plot gene expression interaction over time and group
-##'
-##' This function creates an interaction plot for a single gene, showing its expression over time and across groups (clones), with error bars and group-specific normalization. The plot is saved as a PDF.
-##'
-##' @param gensmbl Character. Gene symbol to plot.
-##' @param x.factor Numeric or factor. Time or x-axis variable for the plot.
-##' @param trace.factor Factor. Grouping variable (e.g., clone or condition).
-##' @param ExprMat Numeric matrix. Expression matrix with genes as rows and samples as columns.
-##' @param cpalette Character vector. Colors for each group/clone.
-##'
-##' @return Invisibly returns NULL. Side effect: saves a PDF plot named "<gene>_Interaction.pdf".
-##' @export
-##'
-##' @examples
-##' \dontrun{
-##'   InteractionPlotIrtx("GeneA", x.factor = time, trace.factor = group, ExprMat = exprs, cpalette = c("red", "blue"))
-##' }
+#' Plot gene expression interaction over time and group
+#'
+#' This function creates an interaction plot for a single gene, showing its expression over time and across groups (clones), with error bars and group-specific normalization. The plot is saved as a PDF.
+#'
+#' @param gensmbl Character. Gene symbol to plot.
+#' @param x.factor Numeric or factor. Time or x-axis variable for the plot.
+#' @param trace.factor Factor. Grouping variable (e.g., clone or condition).
+#' @param ExprMat Numeric matrix. Expression matrix with genes as rows and samples as columns.
+#' @param cpalette Character vector. Colors for each group/clone.
+#'
+#' @return Invisibly returns NULL. Side effect: saves a PDF plot named "<gene>_Interaction.pdf".
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'   InteractionPlotIrtx("GeneA", x.factor = time, trace.factor = group, ExprMat = exprs, cpalette = c("red", "blue"))
+#' }
 
 
 InteractionPlotIrtx <-function(gensmbl,x.factor,trace.factor,ExprMat,cpalette) {

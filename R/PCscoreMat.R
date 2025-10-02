@@ -1,4 +1,3 @@
-
 #' Compute a principal component score matrix for clusters
 #'
 #' This function calculates a score matrix for each cluster based on expression of marker genes.

@@ -1,18 +1,18 @@
-##' Prepare ranked gene list for GSEA
-##'
-##' Converts a differential expression signature table into a named numeric vector for GSEA, mapping gene symbols to Entrez IDs.
-##'
-##' @param signature Data frame. Must contain columns for gene symbols, log fold change, and adjusted p-value.
-##' @param Foldstatistic Character. Name of the column to use as ranking statistic (default: "logFC").
-##' @param species Character. Organism name ("Mus musculus" or "Homo sapiens").
-##'
-##' @return Named numeric vector of ranking statistics, names are Entrez gene IDs.
-##' @export
-##'
-##' @examples
-##' \dontrun{
-##'   stats <- GSEAPrepare(signature, Foldstatistic = "logFC", species = "Mus musculus")
-##' }
+#' Prepare ranked gene list for GSEA
+#'
+#' Converts a differential expression signature table into a named numeric vector for GSEA, mapping gene symbols to Entrez IDs.
+#'
+#' @param signature Data frame. Must contain columns for gene symbols, log fold change, and adjusted p-value.
+#' @param Foldstatistic Character. Name of the column to use as ranking statistic (default: "logFC").
+#' @param species Character. Organism name ("Mus musculus" or "Homo sapiens").
+#'
+#' @return Named numeric vector of ranking statistics, names are Entrez gene IDs.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'   stats <- GSEAPrepare(signature, Foldstatistic = "logFC", species = "Mus musculus")
+#' }
 
 GSEAPrepare <- function(signature, Foldstatistic = "logFC",species ) {
   

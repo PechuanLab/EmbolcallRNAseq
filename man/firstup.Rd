@@ -2,19 +2,19 @@
 % Please edit documentation in R/firstup.R
 \name{firstup}
 \alias{firstup}
-\title{Title}
+\title{Capitalize the First Letter of Each String}
 \usage{
 firstup(x)
 }
 \arguments{
-\item{x}{}
+\item{x}{Character vector. The strings to capitalize.}
 }
 \value{
-firstup
+Character vector with the first letter of each element capitalized.
 }
 \description{
-Title
+Converts the first character of each element in a character vector to uppercase, leaving the rest unchanged.
 }
 \examples{
-firstup( )
+firstup(c("gene", "example", "test"))
 }

@@ -1,18 +1,18 @@
 
-##' Run and plot GO/Pathway enrichment with gprofiler2::gost
-##'
-##' This function filters a differential expression signature for significant genes, runs gprofiler2::gost for pathway enrichment, plots the top pathways, and saves both the plot and results.
-##'
-##' @param signature Data frame. Differential expression results with rownames as gene symbols and columns including `logFC` and `adj.P.Val`.
-##' @param species Character. Organism code for gprofiler2 (e.g., "mmusculus" for mouse, "hsapiens" for human). Default is "mmusculus".
-##'
-##' @return Invisibly returns NULL. Side effects: saves a PDF plot ("GOstPlot.pdf") and an RDS file ("GOstPlot_results.rds").
-##' @export
-##'
-##' @examples
-##' \dontrun{
-##'   GostWrap(signature, species = "mmusculus")
-##' }
+#' Run and plot GO/Pathway enrichment with gprofiler2::gost
+#'
+#' This function filters a differential expression signature for significant genes, runs gprofiler2::gost for pathway enrichment, plots the top pathways, and saves both the plot and results.
+#'
+#' @param signature Data frame. Differential expression results with rownames as gene symbols and columns including `logFC` and `adj.P.Val`.
+#' @param species Character. Organism code for gprofiler2 (e.g., "mmusculus" for mouse, "hsapiens" for human). Default is "mmusculus".
+#'
+#' @return Invisibly returns NULL. Side effects: saves a PDF plot ("GOstPlot.pdf") and an RDS file ("GOstPlot_results.rds").
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'   GostWrap(signature, species = "mmusculus")
+#' }
 
 GostWrap <- function(signature,species =  "mmusculus") {
 	# Get significant genes

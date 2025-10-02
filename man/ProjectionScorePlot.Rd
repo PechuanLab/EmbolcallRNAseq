@@ -2,20 +2,21 @@
 % Please edit documentation in R/ProjectionScorePlot.R
 \name{ProjectionScorePlot}
 \alias{ProjectionScorePlot}
-\title{Title}
+\title{Plot Projection Score Curve and Optimal Theta}
 \usage{
 ProjectionScorePlot(ps.df)
 }
 \arguments{
-\item{ps.df}{}
+\item{ps.df}{Data frame. Must contain columns \code{Thetas} (fraction of features used) and \code{ProjectionScores} (projection score for each theta).}
 }
 \value{
-Projection Score Plot for quick variable selection
+Invisibly returns the plot. Side effect: displays a ggplot2/ggpubr plot with the projection score curve and optimal theta.
 }
 \description{
-Title
+Plots the projection score as a function of theta (fraction of features used), overlays a smoothed spline, and marks the theta value that maximizes the projection score. Useful for visualizing variable selection in projection analysis.
 }
 \examples{
-ProjectionScorePlot(ps.df)
-
+\dontrun{
+  ProjectionScorePlot(ps.df)
+}
 }

@@ -1,4 +1,3 @@
-
 #' Generate and save an MA plot for differential expression results
 #'
 #' This function creates an MA plot (log2 fold change vs. mean expression) from a differential expression signature table and saves it as a PNG file. It uses ggpubr::ggmaplot for visualization, highlights significant genes, and handles infinite/NA values.

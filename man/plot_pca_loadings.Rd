@@ -8,13 +8,13 @@ plot_pca_loadings(loadings_df, plot_variables = NULL, spar = 0.999)
 }
 \arguments{
 \item{loadings_df}{A data.frame containing PCA loadings with at least columns
-`Rank` (numeric loading values) and `Variable` (variable/gene identifiers).}
+\code{Rank} (numeric loading values) and \code{Variable} (variable/gene identifiers).}
 
 \item{plot_variables}{character() Optional. Vector of variable names to highlight
-on the plot with vertical dashed lines and labels. Default: `NULL`.}
+on the plot with vertical dashed lines and labels. Default: \code{NULL}.}
 
-\item{spar}{numeric Smoothing parameter passed to [stats::smooth.spline()].
-Default is `0.999`.}
+\item{spar}{numeric Smoothing parameter passed to \code{\link[stats]{smooth.spline}}.
+Default is \code{0.999}.}
 }
 \value{
 An integer vector of indices where the second derivative of the spline
