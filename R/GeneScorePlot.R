@@ -30,10 +30,10 @@ GeneScorePlot <- function(Signature, Pheno, my_comparisons, Factor, Palette) {
             color = Factor, palette = Palette ,add="jitter")+
     stat_compare_means(comparisons = my_comparisons,method ="t.test",
                        method.args = list(alternative = "two.sided"),
-                       p.adjust.method = "fdr",var.equal=F,
+                       p.adjust.method = "fdr",var.equal=F, # nolint
                        label="p.signif")+
     ylab("Gene Score")+
     xlab("")+
-    theme(axis.text.x = element_text(angle = 90,hjust = 1),legend.position = "none")+
+    theme(axis.text.x = element_text(angle = 90,hjust = 1),legend.position = "none")+ # nolint
     font("x.text", size = 11)+font("y.text", size = 11)
 }
