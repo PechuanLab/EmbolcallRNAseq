@@ -24,7 +24,7 @@ GSEAPrepare <- function(signature, Foldstatistic = "logFC",species ) {
 
   if(species == "Mus musculus"){
     dbGSEA = org.Mm.eg.db::org.Mm.eg.db
-  } else if (species =="Homo sapiens"){
+  } else if (species == "Homo sapiens"){
     dbGSEA = org.Hs.eg.db::org.Hs.eg.db
   }
   dat$GenENTRZ = AnnotationDbi::mapIds(dbGSEA, as.character(signature$symbol), 'ENTREZID', 'SYMBOL')

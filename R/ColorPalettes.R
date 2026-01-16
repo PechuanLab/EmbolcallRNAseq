@@ -1,23 +1,27 @@
 #' Get a Color Palette
 #'
-#' This function returns a specified color palette.
+#' Returns one of the predefined color palettes used across the package.
 #'
-#' @param palette A character string specifying the palette to use. Options are "palette1", "palette2", and "palette3".
-#' @return A vector of color hex codes.
+#' @param palette Character. Name of the palette to return. Options:
+#'   "TreatmentPalette", "ClusterPaletteCoarse", "CellcylcePal".
+#'   Default is "TreatmentPalette".
+#' @return A character vector of color hex codes.
 #' @export
 #' @examples
-#' ColorPalettes("palette1")
-
-ColorPalettes <- function(palette = "palette1") {
+#' ColorPalettes("TreatmentPalette")
+#' ColorPalettes("ClusterPaletteCoarse")
+#' ColorPalettes("CellcylcePal")
+ColorPalettes <- function(palette = "TreatmentPalette") {
   palettes <- list(
-    "palette1" = c("#FF5733", "#33FF57", "#3357FF"),
-    "palette2" = c("#F0E442", "#0072B2", "#D55E00"),
-    "palette3" = c("#CC79A7", "#56B4E9", "#009E73")
+    TreatmentPalette = c("gray", "#8AC926", "forestgreen"),
+    ClusterPaletteCoarse = c("sienna4", "firebrick", "gray47", "royalblue", "skyblue",
+                             "#FF7F00", "gold", "#6B8E23", "salmon", "tan1"),
+    CellcylcePal = c("#ff595e", "#1982C4", "#8AC926", "#FFCA3A")
   )
-  
+
   if (!palette %in% names(palettes)) {
-    stop("Invalid palette name. Choose from 'palette1', 'palette2', or 'palette3'.")
+    stop(sprintf("Invalid palette name. Choose from: %s", paste(names(palettes), collapse = ", ")))
   }
-  
+
   return(palettes[[palette]])
 }

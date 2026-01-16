@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples AtlasScoreHeatmap(ExprMat,pure_markers,Csplit,Rsplit,colnamesS=F)
-AtlasScoreHeatmap <- function(ExprMat,MarkerSet = pure_markers,Csplit,Rsplit,colnamesS=F) {
+AtlasScoreHeatmap <- function(ExprMat,MarkerSet = pure_markers,Csplit,Rsplit,colnamesS=F) { # nolint
   # Score the signatures
   pc_matrix = PCscoreMat(ExprMat,MarkerSet)
   # Generate the plot
