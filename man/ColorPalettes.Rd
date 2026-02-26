@@ -4,17 +4,21 @@
 \alias{ColorPalettes}
 \title{Get a Color Palette}
 \usage{
-ColorPalettes(palette = "palette1")
+ColorPalettes(palette = "TreatmentPalette")
 }
 \arguments{
-\item{palette}{A character string specifying the palette to use. Options are "palette1", "palette2", and "palette3".}
+\item{palette}{Character. Name of the palette to return. Options:
+"TreatmentPalette", "ClusterPaletteCoarse", "CellcylcePal".
+Default is "TreatmentPalette".}
 }
 \value{
-A vector of color hex codes.
+A character vector of color hex codes.
 }
 \description{
-This function returns a specified color palette.
+Returns one of the predefined color palettes used across the package.
 }
 \examples{
-ColorPalettes("palette1")
+ColorPalettes("TreatmentPalette")
+ColorPalettes("ClusterPaletteCoarse")
+ColorPalettes("CellcylcePal")
 }

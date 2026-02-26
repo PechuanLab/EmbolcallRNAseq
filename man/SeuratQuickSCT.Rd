@@ -4,7 +4,13 @@
 \alias{SeuratQuickSCT}
 \title{Process Seurat Object with SCTransform, PCA, and UMAP}
 \usage{
-SeuratQuickSCT(seu, ndims = 30, npcs = 50, species = c("human", "mouse"))
+SeuratQuickSCT(
+  seu,
+  ndims = 30,
+  npcs = 50,
+  species = c("human", "mouse"),
+  vars.to.regress = c("S.Score", "G2M.Score", "percent_ribo", "percent_mito")
+)
 }
 \arguments{
 \item{seu}{A Seurat object to be processed.}
@@ -14,6 +20,9 @@ SeuratQuickSCT(seu, ndims = 30, npcs = 50, species = c("human", "mouse"))
 \item{npcs}{Number of principal components to be calculated.}
 
 \item{species}{Species for cell cycle scoring. One of "human" or "mouse". Default is "human".}
+
+\item{vars.to.regress}{Character vector. Variables to regress out in SCTransform. Default:
+c("S.Score", "G2M.Score", "percent_ribo", "percent_mito")}
 }
 \value{
 A processed Seurat object with normalized data, cell cycle scores, PCA, UMAP, and clusters.
