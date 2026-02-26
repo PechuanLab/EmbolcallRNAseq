@@ -1,94 +1,44 @@
-#' Get Cell Type Signature Genes or Subsignature
+#' Cell-type signature lookup (mouse or human)
 #'
-#' Returns the full signature list for a cell type group (e.g., "TCells",
-#' "Fibroblasts", "Macrophages", "NSCLC_TumorCells", "GastricCells", "Esophagus")
-#' or a specific subsignature vector if prompted (e.g., "Effector", "Myo",
-#' "Inflammatory", "Proliferation", "Parietal").
+#' Return cell-type signature lists or a specific subsignature. Choose species
+#' to get mouse-style (Title-case) or human-style (UPPERCASE) gene symbols.
 #'
-#' @param signature_name Character. The name of the group ("TCells",
-#'   "Fibroblasts", "Macrophages", "NSCLC_TumorCells", "GastricCells", "Esophagus")
-#'   or the subsignature (e.g., "Effector", "Myo", "Inflammatory", "Proliferation",
-#'   "Parietal"). Matching is case-insensitive.
-#' @return If a group name is provided, returns the full signature list for that
-#'   group (a named list). If a subsignature name is provided, returns the
-#'   character vector of gene symbols. Returns NULL if not found.
-#' @examples
-#' scSignatures("TCells")
-#' scSignatures("GastricCells")
-#' scSignatures("Esophagus")
-#' scSignatures("Parietal")
+#' @param signature_name Character. Group name (e.g. "TCells") or subsignature
+#'   (e.g. "Effector"). Case-insensitive.
+#' @param species Character. "mouse" or "human". Determines symbol casing.
+#'   Default: "mouse".
+#' @return If a group name is provided, a named list of subsignatures; if a
+#'   subsignature name is provided, a character vector of gene symbols. NULL if
+#'   not found.
 #' @export
-scSignatures <- function(signature_name) {
+scSignatures <- function(signature_name, species = c("mouse", "human")) {
+  species <- match.arg(species)
+
+  to_title <- function(vec) {
+    vapply(vec, function(g) {
+      g2 <- tolower(g)
+      sub("^(.)", "\\U\\1", g2, perl = TRUE)
+    }, FUN.VALUE = character(1))
+  }
+
+  # base (mouse-style) groups
   TCells <- list(
     Exhaustion = c("Pdcd1","Tigit","Tox","Lag3","Entpd1","Tnfrsf9","Havcr2","Ctla4"),
-    Effector= c("Gzma","Gzmb","Gzmk","Prf1","Nkg7","Ifng","Tnf"),
-    Coestimulatory= c("Tnfrsf9","Icos","Cd28"),
-    NaiveMemory= c("Il7r","Tcf7","Sell","Ccr7","Lef1"),
+    Effector = c("Gzma","Gzmb","Gzmk","Prf1","Nkg7","Ifng","Tnf"),
+    Coestimulatory = c("Tnfrsf9","Icos","Cd28"),
+    NaiveMemory = c("Il7r","Tcf7","Sell","Ccr7","Lef1"),
     Th1 = c("Tbx21","Il12rb1","Il12rb2","Stat4"),
     Th2 = c("Gata3","Stat6","Il4ra")
   )
 
   Fibroblasts <- list(
-    # From Dominguez et al. 2020, Buechler et al. 2021, Pechuan et al. 2023
-    # Commented with functional/contextual interpretation for scRNA-seq annotation
-       PanFibroblasts = c(
-        "Pdgfra", # PDGF receptor alpha; core mesenchymal/fibroblast lineage marker (pan-fibroblast)
-        "Postn",  # periostin; ECM protein induced in activated fibroblasts and CAFs (not quiescent-specific)
-        "Dcn",    # decorin; small leucine-rich proteoglycan, classic interstitial fibroblast ECM component
-        "Col1a1", # collagen type I alpha 1; defining fibroblast ECM gene (also high in myofibroblasts)
-        "Lum",    # lumican; ECM proteoglycan marking interstitial/quiescent fibroblasts
-        "Fbln1"   # fibulin-1; ECM glycoprotein broadly expressed in fibroblasts
-      ),
-      Mesothelial = c(
-        "Lgals7",  # galectin-7; epithelial/mesothelial-associated lectin involved in adhesion and stress responses
-        "Upk3b",   # uroplakin 3B; highly specific surface marker of mesothelial lining cells
-        "Lrrn4",   # leucine-rich repeat neuronal protein 4; enriched in serosal mesothelium, useful discriminator vs fibroblasts
-        "Ptger3",  # prostaglandin E receptor 3; signaling receptor expressed in mesothelial cells
-        "Wt1",     # Wilms tumor 1; master transcription factor defining mesothelial lineage identity
-        "Krt19"    # keratin 19; intermediate filament marking epithelial/mesothelial phenotype
-      ),
-      Adventitial  = c(
-        "Pi16",    # peptidase inhibitor 16; hallmark quiescent/adventitial fibroblast marker
-        "Dpt",     # dermatopontin; ECM-associated protein enriched in homeostatic fibroblasts
-        "Cd34",    # progenitor/perivascular fibroblast marker; lost upon activation
-        "Clec3b",  # tetranectin; quiescent stromal/adventitial fibroblast-associated
-        "Ly6c1"    # Ly6 family member; enriched in Sca-1–like adventitial fibroblast populations (context-dependent)
-      ),
-      Myofibroblasts = c(
-        "Acta2", # alpha-smooth muscle actin; defining contractile myofibroblast marker (TGF-β–driven)
-        "Tagln", # transgelin; actin-binding protein associated with contractility
-        "Myh11", # smooth muscle myosin heavy chain; late/strong contractile program
-        "Cnn1" ,  # calponin 1; smooth muscle–like cytoskeletal protein
-        "Lrrc15"  # leucine-rich repeat–containing protein; myofibroblast-enriched in some contexts
-      ),
-      # Cell states and functional programs
-      Inflammatory  = c(
-        "Cxcl5",   # neutrophil-recruiting chemokine; inflammatory CAF feature
-        "Rarres2", # chemerin; retinoid-responsive inflammatory/adipogenic stromal factor
-        "Ccl2",    # monocyte/macrophage recruitment chemokine (CCR2 axis)
-        "Ccl7",    # chemokine promoting myeloid cell infiltration
-        "Cxcl12"   # CXCL12/SDF-1; key chemoattractant, immune-modulatory and niche-forming CAF signal
-      ),
-      Retinol =   c(
-      "Rbp1",     # intracellular retinol-binding protein; hallmark of quiescent stellate/adventitial fibroblasts
-      "Rbp4",     # secreted retinol-binding protein; retinol transport in stromal/adipogenic-like fibroblasts
-      "Stra6",    # cell-surface receptor for RBP4–retinol complex; mediates retinol uptake
-      "Lrat",     # esterifies retinol for storage in lipid droplets; lost during CAF activation
-      "Rdh10",    # retinol → retinal conversion; upstream RA biosynthesis step
-      "Aldh1a1",  # retinal → retinoic acid; enforces quiescence and antagonizes TGF-β signaling
-      "Aldh1a2",  # alternative RA-synthesizing enzyme; tissue- and context-dependent stromal expression
-      "Crabp1",   # cellular retinoic acid–binding protein 1; buffers intracellular RA availability (often non-genomic RA signaling)
-      "Crabp2",   # cellular retinoic acid–binding protein 2; shuttles RA to nuclear RARs (genomic RA signaling)
-      "Rara",     # retinoic acid receptor alpha; nuclear transcriptional effector of RA signaling
-      "Rxra",     # retinoid X receptor alpha; heterodimer partner for RARs
-      "Cyp26b1",  # RA-degrading enzyme; induced in activated CAFs to suppress RA signaling
-      "Rarres2"   # chemerin; retinoid-responsive adipokine-like factor marking adipogenic/stellate-like fibroblasts
-    ),
-  Others =  c(
-      "Grem1",   # BMP antagonist; defines niche-supporting fibroblasts that promote epithelial stemness and CAF signaling programs
-      "Spp1"   # osteopontin; matricellular cytokine involved in immune modulation, macrophage interaction, and tissue remodeling
-      )
-
+    PanFibroblasts = c("Pdgfra","Postn","Dcn","Col1a1","Lum","Fbln1"),
+    Mesothelial = c("Lgals7","Upk3b","Lrrn4","Ptger3","Wt1","Krt19"),
+    Adventitial = c("Pi16","Dpt","Cd34","Clec3b","Ly6c1"),
+    Myofibroblasts = c("Acta2","Tagln","Myh11","Cnn1","Lrrc15"),
+    Inflammatory = c("Cxcl5","Rarres2","Ccl2","Ccl7","Cxcl12"),
+    Retinol = c("Rbp1","Rbp4","Stra6","Lrat","Rdh10","Aldh1a1","Aldh1a2","Crabp1","Crabp2","Rara","Rxra","Cyp26b1","Rarres2"),
+    Others = c("Grem1","Spp1")
   )
 
   Macrophages <- list(
@@ -111,7 +61,6 @@ scSignatures <- function(signature_name) {
     Epithelial = c("Cdh1","Epcam","Krt19","Krt8")
   )
 
-  # Gastric-specific cell type signatures
   GastricCells <- list(
     Parietal = c("Atp4a","Atp4b","Clic6","Ckb"),
     Chief = c("Pga5","Pgc","Cblif"),
@@ -124,24 +73,52 @@ scSignatures <- function(signature_name) {
     SPEM = c("Cd44","Tff2","Gkn3")
   )
 
-  # Esophagus-specific cell type signatures (mouse gene symbols / Title-cased)
   Esophagus <- list(
-    Basal = c("Krt5","Krt14","Trp63","Krt15"),               # proliferative basal layer
-    Suprabasal = c("Krt4","Krt13","Ivl","Flg"),             # early differentiation / suprabasal
-    Differentiated = c("Krt1","Krt10","Lor"),               # fully differentiated keratinocytes
-    Goblet_Barrett = c("Muc2","Tff3","Cdx2"),              # intestinal metaplasia / Barrett markers
-    SmoothMuscle = c("Acta2","Myh11","Myl9"),              # muscularis propria / smooth muscle
-    Endothelial = c("Pecam1","Vwf","Eng")                  # vasculature
+    Basal = c("Krt5","Krt14","Trp63","Krt15"),
+    Suprabasal = c("Krt4","Krt13","Ivl","Flg"),
+    Differentiated = c("Krt1","Krt10","Lor"),
+    Goblet_Barrett = c("Muc2","Tff3","Cdx2"),
+    SmoothMuscle = c("Acta2","Myh11","Myl9"),
+    Endothelial = c("Pecam1","Vwf","Eng")
   )
 
-  groups <- list(
+  Colon <- list(
+    Enterocyte = c("Alpi","Slc26a3","Fabp2","Tmem37"),
+    Goblet = c("Muc2","Fcgbp","Tff3","Agr2","Spdef","Zg16","Clca1","Spink4"),
+    Paneth_or_PanethLike = c("Lyz","Ca4","Ca7","Spib"),
+    Enteroendocrine = c("Chga","Chgb","Cpe","Neurod1","Pyy"),
+    Progenitor_Regenerative = c("Sox9","Cdk6","Muc4","Fabp5","Pla2g2a","Lcn2"),
+    TA_Cycling = c("Mki67","Top2a","Pcna","Ccna2","Mcm5"),
+    TA_Cycling_Alt = c("Nusap1","Ube2c","Cenpf","Aurkb","Cdk1"),
+    Stem_WNT = c("Lgr5","Ascl2","Smoc2","Axin2","Apcdd1","Nkd1"),
+    Tuft = c("Pou2f3","Trpm5","Gfi1b","Dclk1")
+  )
+
+  PancreaticCancer <- list(
+    Tumor_Epithelial = c("Krt19","Epcam","Sox9","Pdx1","Kras"),
+    Cancer_Associated_Fibroblasts = c("Acta2","Pdgfra","Postn","Fap","Col1a1"),
+    Immune = c("Cd68","Adgre1","Cd3e","Cd4","Cd8a"),
+    Acinar = c("Cpa1","Ptf1a","Cela3b","Amy2a3"),
+    Endocrine = c("Ins1","Gcg","Sst","Ppy")
+  )
+
+  base_groups <- list(
     TCells = TCells,
     Fibroblasts = Fibroblasts,
     Macrophages = Macrophages,
     NSCLC_TumorCells = NSCLC_TumorCells,
     GastricCells = GastricCells,
-    Esophagus = Esophagus
+    Esophagus = Esophagus,
+    Colon = Colon,
+    PancreaticCancer = PancreaticCancer
   )
+
+  # convert according to species
+  if (species == "human") {
+    groups <- lapply(base_groups, function(sub) lapply(sub, toupper))
+  } else {
+    groups <- lapply(base_groups, function(sub) lapply(sub, to_title))
+  }
 
   if (missing(signature_name) || length(signature_name) != 1) {
     stop("Please provide a single signature_name (group or subsignature).")
@@ -149,21 +126,16 @@ scSignatures <- function(signature_name) {
 
   sig_lower <- tolower(signature_name)
 
-  # If a group name was provided (case-insensitive), return the entire group list
+  # match group
   grp_match <- names(groups)[tolower(names(groups)) == sig_lower]
-  if (length(grp_match) == 1) {
-    return(groups[[grp_match]])
-  }
+  if (length(grp_match) == 1) return(groups[[grp_match]])
 
-  # Otherwise, search subsignatures across all groups (case-insensitive)
+  # match subsignature
   for (g in names(groups)) {
     subs <- names(groups[[g]])
     idx <- which(tolower(subs) == sig_lower)
-    if (length(idx) == 1) {
-      return(groups[[g]][[idx]])
-    }
+    if (length(idx) == 1) return(groups[[g]][[idx]])
   }
 
-  # Not found
   return(NULL)
 }

@@ -24,7 +24,7 @@ SeuratQuickSCT <- function(seu, ndims = 30, npcs = 50, species = c("human", "mou
   species <- match.arg(species)
   # Normalize data
   seu <- NormalizeData(seu, scale.factor = median(seu@meta.data$nCount_RNA))
-  
+   
   # Cell cycle scoring
   if (species == "mouse") {
     # Seurat's recommended approach for mouse is to title-case human CC genes
