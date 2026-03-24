@@ -4,17 +4,23 @@
 \alias{SeuratMerge}
 \title{Merge Multiple Seurat Objects}
 \usage{
-SeuratMerge(seurats)
+SeuratMerge(seurats, additional_assays = NULL)
 }
 \arguments{
-\item{seurats}{A character vector of file paths to the Seurat objects to be merged.}
+\item{seurats}{Character vector of file paths to Seurat .rds files.}
+
+\item{additional_assays}{Character or NULL. Name of an additional assay to
+preserve (e.g. "CiteSeq"). If NULL only RNA is kept. Default NULL.}
 }
 \value{
 A merged Seurat object with joined layers.
 }
 \description{
-This function reads multiple Seurat objects from a list of file paths, merges them into a single Seurat object, and joins the layers.
+Read multiple Seurat .rds files, preserve RNA assay and optionally include
+additional assays, merge objects sequentially and join layers.
 }
 \examples{
-SeuratMerge(seurats)
+\dontrun{
+SeuratMerge(c("s1.rds", "s2.rds"), additional_assays = "CiteSeq")
+}
 }

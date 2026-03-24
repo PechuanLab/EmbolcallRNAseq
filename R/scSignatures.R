@@ -24,8 +24,8 @@ scSignatures <- function(signature_name, species = c("mouse", "human")) {
   # base (mouse-style) groups
   TCells <- list(
     Exhaustion = c("Pdcd1","Tigit","Tox","Lag3","Entpd1","Tnfrsf9","Havcr2","Ctla4"),
-    Effector = c("Gzma","Gzmb","Gzmk","Prf1","Nkg7","Ifng","Tnf"),
-    Coestimulatory = c("Tnfrsf9","Icos","Cd28"),
+    Effector = c("Gzma","Gzmb","Gzmk","Gzmm","Prf1","Nkg7","Ifng","Tnf","Klrd1"),
+    Coestimulatory = c("Tnfrsf4","Icos","Cd28"),
     NaiveMemory = c("Il7r","Tcf7","Sell","Ccr7","Lef1"),
     Th1 = c("Tbx21","Il12rb1","Il12rb2","Stat4"),
     Th2 = c("Gata3","Stat6","Il4ra")
