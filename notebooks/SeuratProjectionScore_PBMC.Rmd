@@ -1,0 +1,193 @@
+---
+title: "Seurat Projection Score on PBMC3K"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    theme: united
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+
+set.seed(42)
+
+pkg_root <- normalizePath(file.path(getwd(), ".."), mustWork = FALSE)
+if (!file.exists(file.path(pkg_root, "DESCRIPTION"))) {
+  pkg_root <- normalizePath(getwd(), mustWork = TRUE)
+}
+
+pbmc3k_path <- Sys.getenv(
+  "EMBOLCALL_PBMC3K_RDS",
+  unset = "/Users/xpechuanjorge/Documents/Codex/2026-04-29/make-a-plan-to-take-the/examples/pbmc3k.rds"
+)
+```
+
+# Goal
+
+This notebook tests `SeuratProjectionScore()` on the local PBMC3K Seurat object.
+It sweeps several variance-filtering thresholds up to 5,000 features, always
+retaining the most variable features first, using scaled expression values.
+
+# Load Packages
+
+```{r libraries}
+library(Seurat)
+library(SeuratObject)
+library(ggplot2)
+
+devtools::load_all(pkg_root, quiet = TRUE)
+```
+
+# Load PBMC3K
+
+```{r load-pbmc3k}
+stopifnot(file.exists(pbmc3k_path))
+
+pbmc <- readRDS(pbmc3k_path)
+DefaultAssay(pbmc) <- "RNA"
+
+pbmc
+dim(pbmc)
+length(VariableFeatures(pbmc))
+head(VariableFeatures(pbmc), 10)
+```
+
+# Prepare Scaled Features
+
+The object already has 5,000 variable features. Here we scale exactly those
+features and use the scaled layer for projection scoring. Each threshold below
+keeps the top `n` most variable features from this ranked list.
+
+```{r scale-features}
+max_features <- 5000
+feature_counts <- c(500, 1000, 1500, 2000, 3000, 4000, 5000)
+nboot_smoke <- 1
+
+if (length(VariableFeatures(pbmc)) < max_features) {
+  pbmc <- FindVariableFeatures(
+    pbmc,
+    assay = "RNA",
+    nfeatures = max_features,
+    verbose = FALSE
+  )
+}
+
+top_features_5000 <- head(VariableFeatures(pbmc), max_features)
+stopifnot(length(top_features_5000) == max_features)
+
+pbmc <- ScaleData(
+  pbmc,
+  assay = "RNA",
+  features = top_features_5000,
+  verbose = FALSE
+)
+
+scaled_matrix <- GetAssayData(pbmc, assay = "RNA", layer = "scale.data")
+dim(scaled_matrix)
+stopifnot(nrow(scaled_matrix) >= max_features)
+```
+
+# Projection Score Sweep
+
+The bootstrap count is intentionally small here so the notebook acts as a smoke
+test. Increase `nboot_smoke` for final analysis.
+
+```{r score-sweep}
+projection_score_summary <- do.call(
+  rbind,
+  lapply(feature_counts, function(n_features) {
+    features <- head(top_features_5000, n_features)
+
+    set.seed(42 + n_features)
+    elapsed <- system.time({
+      score <- SeuratProjectionScore(
+        pbmc,
+        assay = "RNA",
+        layer = "scale.data",
+        features = features,
+        use.variable.features = FALSE,
+        NPCs = 3,
+        nboot = nboot_smoke
+      )
+    })
+
+    data.frame(
+      variance_threshold = n_features,
+      n_features = n_features,
+      threshold_label = paste0(n_features, " most variable features"),
+      reference = ifelse(n_features == 2000, "Seurat 2,000 reference", "Threshold sweep"),
+      layer = "scale.data",
+      NPCs = 3,
+      nboot = nboot_smoke,
+      projection_score = score,
+      elapsed_seconds = unname(elapsed[["elapsed"]])
+    )
+  })
+)
+
+projection_score_summary
+stopifnot(
+  nrow(projection_score_summary) == length(feature_counts),
+  max(projection_score_summary$n_features) == max_features,
+  all(is.finite(projection_score_summary$projection_score))
+)
+```
+
+# Plot
+
+```{r projection-score-plot, fig.width=8, fig.height=4.8}
+ggplot(
+  projection_score_summary,
+  aes(
+    x = n_features,
+    y = projection_score,
+    color = reference
+  )
+) +
+  geom_hline(yintercept = 0, linewidth = 0.35, color = "grey45") +
+  geom_vline(xintercept = 2000, linewidth = 0.35, linetype = "dashed", color = "grey35") +
+  geom_line(color = "#2F5D62", linewidth = 0.85) +
+  geom_point(size = 3.4) +
+  geom_text(
+    aes(label = sprintf("%.4f", projection_score)),
+    vjust = ifelse(projection_score_summary$projection_score >= 0, -0.75, 1.6),
+    size = 3.3,
+    color = "grey20"
+  ) +
+  annotate(
+    "text",
+    x = 2000,
+    y = max(projection_score_summary$projection_score),
+    label = "2,000 reference",
+    angle = 90,
+    vjust = -0.45,
+    size = 3.2,
+    color = "grey30"
+  ) +
+  scale_x_continuous(
+    breaks = feature_counts,
+    labels = scales::comma
+  ) +
+  scale_color_manual(
+    values = c("Seurat 2,000 reference" = "#E15759", "Threshold sweep" = "#2F5D62")
+  ) +
+  labs(
+    title = "Projection Score Across PBMC3K Variance Thresholds",
+    subtitle = "Each point keeps the top variable features up to the threshold; maximum threshold is 5,000",
+    x = "Most variable features retained",
+    y = "Projection score",
+    color = NULL
+  ) +
+  theme_classic(base_size = 12) +
+  theme(
+    legend.position = "top",
+    plot.title = element_text(face = "bold")
+  )
+```

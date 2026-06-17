@@ -30,6 +30,11 @@ scSignatures <- function(signature_name, species = c("mouse", "human")) {
     Th1 = c("Tbx21","Il12rb1","Il12rb2","Stat4"),
     Th2 = c("Gata3","Stat6","Il4ra")
   )
+  Bcells <- list(
+    Naive = c("Ighm","Ighd","Cd19","Cd79a","Cd79b"),
+    Memory = c("Cd27","Cd38","Cd24a","Cd80","Cd86"),
+    Plasma = c("Jchain","Mzb1","Sdc1","Xbp1")
+  )
 
   Fibroblasts <- list(
     PanFibroblasts = c("Pdgfra","Postn","Dcn","Col1a1","Lum","Fbln1"),
@@ -69,7 +74,7 @@ scSignatures <- function(signature_name, species = c("mouse", "human")) {
     MucousNeck = c("Muc6","Tff2","Gkn2"),
     Enteroendocrine = c("Chga","Chgb","Tph1","Neurod1"),
     StemProgenitor = c("Lgr5","H19"),
-    Tuft = c("Pou2f3","Dclk1","Trpm5"),
+    Tuft = c("Pou2f3","Dclk1","Ptprc","Lrmp"),
     SPEM = c("Cd44","Tff2","Gkn3")
   )
 
